@@ -27,10 +27,13 @@ include_once('header.php');
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Patient</th>
-                <th scope="col">Procedure</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Address</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Age</th>
+                <th scope="col">Date Registered</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -43,6 +46,51 @@ include_once('header.php');
       <!-- end table -->
     </div>
   </div>
+
+  <script>
+    $(document).ready(function() {
+    loadUsers();
+
+    function loadUsers() {
+        $.ajax({
+            type: 'GET',
+            url: 'handles/users/read_users.php',
+            dataType: 'JSON',
+            success: function(response) {
+                console.log("RESPONSE READ USERS:", response);
+                $('#tbodyUsers').empty();
+                
+                response.data.forEach(function(data) {
+                    const read_users_html = `
+                        <tr>
+                            <th scope="row">${data.user_id}</th>
+                            <td><small>${data.first_name} ${data.middle_name} ${data.last_name}</small></td>
+                            <td><small>${data.contact}</small></td>
+                            <td><small>${data.email}</small></td>
+                            <td><small>${data.address}</small></td>
+                            <td><small>${data.formatted_birthday}</small></td>
+                            <td><small>${data.age}</small></td>
+                            <td><small>${data.formatted_user_created}</small></td>
+                            <td>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
+                                    <button id='edit_${data.user_id}' type='button' class='btn btn-success'>Edit</button>
+                                    <button id='delete_${data.user_id}' type='button' class='btn btn-danger'>Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    
+                    $('#tbodyUsers').append(read_users_html);
+                });
+            },
+            error: function(error) {
+                console.log("ERROR READ USERS:", error);
+            }
+        });
+    }
+});
+
+  </script>
 
   <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'></script>
 </body>
