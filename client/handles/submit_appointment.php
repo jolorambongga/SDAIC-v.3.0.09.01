@@ -1,6 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once('../../includes/config.php');
+    require_once('../../admin/mail/mail_script.php');
 
     $user_id = $_POST['user_id'];
     $service_id = $_POST['service_id'];
@@ -9,12 +10,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $request_image = file_get_contents($_FILES['request_image']['tmp_name']);
     $base_64 = base64_encode($request_image);
 
+    $appointment_datetime = $appointment_date . ' ' . $appointment_time;
+    $date = new DateTime($appointment_datetime);
+    $formatted_date = $date->format('l, F j, Y g:i A');
+
+
+    $full_name = $_POST['full_name'];
+    $service_name = $_POST['service_name'];
+
+    $email = $_POST['email'];
+
+    $subject = "New Appointment Notice! - " . date('F j, Y');
+    $message = "
+    <html>
+    <head>
+    <style>
+    .container {
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+    .header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    .content {
+        padding: 20px;
+    }
+    .content p {
+        margin: 0 0 10px;
+    }
+    .highlight {
+        color: #007bff;
+        font-weight: bold;
+    }
+    .footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+        border-top: 1px solid #ddd;
+        font-size: 12px;
+        color: #666;
+    }
+    </style>
+    </head>
+    <body>
+    <div class='container'>
+    <div class='header'>
+    <h2>New Appointment Confirmation</h2>
+    </div>
+    <div class='content'>
+    <p>Good Day <span class='highlight'>$full_name</span>!</p>
+    <p>You have successfully created an appointment for <span class='highlight'>$service_name</span> on:</p>
+    <p><strong>Date:</strong> $formatted_date</p>
+    <p>Thank you for choosing our services. We look forward to serving you.</p>
+    </div>
+    <div class='footer'>
+    &copy; " . date('Y') . " Sta Maria Diagnostic Clinic. All rights reserved.
+    </div>
+    </div>
+    </body>
+    </html>
+    ";
+
+    sendMail($email, $subject, $message);
+
     try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $query = "INSERT INTO tbl_appointments
-                  (user_id, service_id, appointment_date, appointment_time, request_image)
-                  VALUES (:user_id, :service_id, :appointment_date, :appointment_time, :request_image);";
+        (user_id, service_id, appointment_date, appointment_time, request_image)
+        VALUES (:user_id, :service_id, :appointment_date, :appointment_time, :request_image);";
 
         $stmt = $pdo->prepare($query);
 

@@ -101,12 +101,81 @@ checkAuth();
 
     // Navigation functions
     $('.next-btn').click(function(){
-      $(this).closest('.form-step').hide().next('.form-step').show();
+      var $currentStep = $(this).closest('.form-step');
+
+      // Validate input before proceeding to next step
+      if ($currentStep.attr('id') === 'step-1') {
+        if ($('#box input[type="radio"]:checked').length === 0) {
+          alert('Please select a procedure before proceeding.');
+          return; // Prevent further action if not validated
+        }
+      }
+      else if ($currentStep.attr('id') === 'step-2') {
+        if ($('#request_image')[0].files.length === 0) {
+          alert('Please upload an image before proceeding.');
+          return; // Prevent further action if not validated
+        }
+      }
+      else if ($currentStep.attr('id') === 'step-3') {
+        if ($('#appointment_datetime').val() === '') {
+          alert('Please select a date and time before proceeding.');
+          return;
+        }
+      }
+
+      // Show next step
+      $currentStep.hide().next('.form-step').show();
+
+      // If it's the last step (step-4), populate review box
+      if ($currentStep.attr('id') === 'step-3') {
+        populateReviewBox();
+      }
     });
+
 
     $('.prev-btn').click(function(){
       $(this).closest('.form-step').hide().prev('.form-step').show();
     });
+
+    function populateReviewBox() {
+      var service_id = $('input[name="select"]:checked').val();
+      var service_name = $('input[name="select"]:checked').data('service-name');
+      var request_image = $('#request_image')[0].files[0];
+      var appointment_datetime = $('#appointment_datetime').val();
+
+      var dateParts = appointment_datetime.split('T');
+      var appointment_date = formatDate(dateParts[0]);
+      var appointment_time = formatTime(dateParts[1]);
+
+      // Populate review box with selected values
+      $('#review-box').html(`
+        <p><strong>Procedure:</strong> ${service_name}</p>
+        <p><strong>Procedure ID:</strong> ${service_id}</p>
+        <p><strong>Image:</strong> ${request_image ? request_image.name : 'No image uploaded'}</p>
+        <p><strong>Appointment Date:</strong> ${appointment_date}</p>
+        <p><strong>Appointment Time:</strong> ${appointment_time}</p>
+      `);
+    }
+
+    // Function to format date as "Day, Month Day, Year"
+    function formatDate(dateString) {
+      var date = new Date(dateString);
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    // Function to format time as "hh:mm AM/PM"
+    function formatTime(timeString) {
+      var time = timeString.split(':');
+      var hours = parseInt(time[0], 10);
+      var minutes = time[1];
+      
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // Handle midnight (0 hours)
+
+      return hours + ':' + minutes + ' ' + ampm;
+    }
 
     // Form submit handler
     $('#appointment-form').submit(function(e){
@@ -125,20 +194,13 @@ checkAuth();
 
       var formData = new FormData();
       formData.append('user_id', <?php echo($_SESSION['user_id']);?>);
+      formData.append('full_name', "<?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>");
+      formData.append('email', "<?php echo($_SESSION['email']);?>");
       formData.append('service_id', service_id);
+      formData.append('service_name', service_name);
       formData.append('appointment_date', appointment_date);
       formData.append('appointment_time', appointment_time);
       formData.append('request_image', request_image);
-
-
-      $('#review-box').html(`
-        <p><strong>Procedure:</strong> ${service_name}</p>
-        <p><strong>Procedure ID:</strong> ${service_id}</p>
-        <p><strong>Image:</strong> ${request_image.name}</p>
-        <p><strong>Appointment Date and Time:</strong> ${appointment_datetime}</p>
-        <p><strong>Appointment Date:</strong> ${appointment_date}</p>
-        <p><strong>Appointment Time:</strong> ${appointment_time}</p>
-        `);
 
       $.ajax({
         type: 'POST',

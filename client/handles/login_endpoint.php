@@ -7,7 +7,7 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $login = $_POST['login']; // This can be either email or username
+    $login = $_POST['login'];
     $password = $_POST['password'];
 
     $sql = "SELECT * FROM tbl_Users WHERE email = :login OR username = :login";
@@ -23,6 +23,8 @@ try {
     if ($user) {
         if (($password == $user['password'])) {
             $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['contact'] = $user['contact'];
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['middle_name'] = $user['middle_name'];
             $_SESSION['last_name'] = $user['last_name'];
