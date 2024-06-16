@@ -6,27 +6,26 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Get POST data
     $doctor_id = $_POST['doctor_id'];
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
     $contact = $_POST['contact'];
-    $avail_dates = json_decode($_POST['avail_dates'], true); // Decode JSON to array
+    $avail_dates = json_decode($_POST['avail_dates'], true);
 
-    // Update doctor information
+
     $sql = "UPDATE tbl_Doctors 
             SET first_name = ?, middle_name = ?, last_name = ?, contact = ?
             WHERE doctor_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$first_name, $middle_name, $last_name, $contact, $doctor_id]);
 
-    // Delete existing availability for the doctor
+
     $sql = "DELETE FROM tbl_DoctorAvailability WHERE doctor_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$doctor_id]);
 
-    // Insert new availability schedules
+
     $sql = "INSERT INTO tbl_DoctorAvailability (doctor_id, avail_date, avail_start_time, avail_end_time) 
             VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);

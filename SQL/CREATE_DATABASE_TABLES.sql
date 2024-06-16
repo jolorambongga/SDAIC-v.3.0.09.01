@@ -84,7 +84,7 @@
         service_id INT NOT NULL,
         appointment_date DATE NOT NULL,
         appointment_time TIME NOT NULL,
-        request_image VARCHAR(255),
+        request_image LONGBLOB,
         notes TEXT,
         status VARCHAR(50) DEFAULT 'PENDING',
         time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

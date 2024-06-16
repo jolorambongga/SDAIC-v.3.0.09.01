@@ -152,6 +152,7 @@ checkAuth();
           console.log(formData)
           console.log(<?php echo($_SESSION['user_id']); ?>);
           alert('Appointment submitted successfully!');
+          // window.location.href="your_appointments.php";
         },
         error: function(error) {
           console.log("ERROR SA SUBMIT APPOINTMENT:", error);

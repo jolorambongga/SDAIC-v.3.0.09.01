@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $appointment_date = $_POST['appointment_date'];
     $appointment_time = $_POST['appointment_time'];
     $request_image = file_get_contents($_FILES['request_image']['tmp_name']);
+    $base_64 = base64_encode($request_image);
 
     try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -24,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':request_image', $request_image, PDO::PARAM_LOB);
 
         if ($stmt->execute()) {
-            echo json_encode(["message" => "Appointment submitted successfully!", "status" => "success"]);
+            echo json_encode(array("status" => "success", "process" => "create appointment"));
         } else {
-            echo json_encode(["error" => "Error submitting appointment."]);
+            echo json_encode(array("message" => "else statement reached"));
         }
     } catch (PDOException $e) {
-        echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+        echo json_encode(array("status" => "error" . $e->getMessage()));
     }
 }
 ?>

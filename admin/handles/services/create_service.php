@@ -13,15 +13,15 @@ try {
     
 
     $sql = "INSERT INTO tbl_Services (doctor_id, service_name, description, cost, duration)
-    VALUES (?, ?, ?, ?, ?);";
+            VALUES (:doctor_id, :service_name, :description, :cost, :duration);";
 
     $stmt = $pdo->prepare($sql);
 
-    $stmt->bindParam(1, $doctor_id, PDO::PARAM_INT);
-    $stmt->bindParam(2, $service_name, PDO::PARAM_STR);
-    $stmt->bindParam(3, $description, PDO::PARAM_STR);
-    $stmt->bindParam(4, $cost, PDO::PARAM_INT);
-    $stmt->bindParam(5, $duration, PDO::PARAM_INT);
+    $stmt->bindParam(':doctor_id', $doctor_id, PDO::PARAM_INT);
+    $stmt->bindParam(':service_name', $service_name, PDO::PARAM_STR);
+    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt->bindParam(':cost', $cost, PDO::PARAM_INT);
+    $stmt->bindParam(':duration', $duration, PDO::PARAM_INT);
 
     $stmt->execute();
 
