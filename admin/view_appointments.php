@@ -16,7 +16,7 @@ include_once('header.php');
       <!-- add button -->
       <div class="row">
         <div class="col-12">
-          <button type="button" class="btn btn-primary mt-3 mb-3 float-end">IDK YET</button>
+          <button type="button" class="btn btn-primary mt-3 mb-3 float-end btn-sm">IDK YET</button>
         </div>
       </div>
       <!-- end button -->
@@ -55,7 +55,7 @@ include_once('header.php');
               ...
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -96,19 +96,19 @@ include_once('header.php');
               }
               const read_appointments_html = `
               <tr>
-              <th scope="row">${data.appointment_id }</th>
-              <td>${data.first_name} ${data.last_name}</td>
-              <td>${data.service_name}</td>
-              <td>${data.formatted_date}</td>
-              <td>${data.formatted_time}</td>
+              <th scope="row"><small>${data.appointment_id}</small></th>
+              <td><small>${data.first_name} ${data.last_name}</small></td>
+              <td><small>${data.service_name}</small></td>
+              <td><small>${data.formatted_date}</small></td>
+              <td><small>${data.formatted_time}</small></td>
               <td data-appointment-id='${data.appointment_id}'>
-              <button id='callReqImg' type='button' class='btn btn-warning'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
+              <button id='callReqImg' type='button' class='btn btn-warning btn-sm'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
               </td>
-              <td style='color: ${statusColor};'>${data.status}</td>
+              <td style='color: ${statusColor};'><small>${data.status}</small></td>
               <td>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-              <button id='reject' type='button' class='btn btn-danger'>Reject</button>
-              <button id='approve' type='button' class='btn btn-success'>Approve</button>
+              <button id='reject' type='button' class='btn btn-danger btn-sm'>Reject</button>
+              <button id='approve' type='button' class='btn btn-success btn-sm'>Approve</button>
               </div>
               </td>
               </tr>

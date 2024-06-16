@@ -224,6 +224,7 @@ include_once('header.php');
       var scheduleList = [];
       var editScheduleList = [];
 
+      // READ SERVICES
       function loadServices() {
         $.ajax({
           type: 'GET',
@@ -240,14 +241,14 @@ include_once('header.php');
 
               const read_service_html = `
               <tr>
-              <th scope="row">${data.service_id}</th>
-              <td>${data.service_name}</td>
-              <td>${data.description}</td>
-              <td>${datesWithNewLines}</td>
-              <td>${timesWithNewLines}</td>
-              <td>${data.duration}</td>
-              <td>${data.cost}</td>
-              <td>${data.full_name}</td>
+              <th scope="row"><small>${data.service_id}</small></th>
+              <td><small>${data.service_name}</small></td>
+              <td><small>${data.description}</small></td>
+              <td><small>${datesWithNewLines}</small></td>
+              <td><small>${timesWithNewLines}</small></td>
+              <td><small>${data.duration}</small></td>
+              <td><small>${data.cost}</small></td>
+              <td><small>${data.full_name}</small></td>
               <td data-service-id='${data.service_id}' data-doctor-id='${data.doctor_id}' data-service-name='${data.service_name}'>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
               <button id='callEdit' type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#mod_editServ'>Edit</button>
@@ -286,18 +287,6 @@ include_once('header.php');
               doctorSelect.append(data);
 
             });
-
-            // var doctorSelect = $('#e_doctor');
-            // doctorSelect.empty(); // Clear existing options
-            // doctorSelect.append('<option selected>Select Doctor...</option>');
-
-            // response.data.forEach(function (doc) {
-            //   const data = `
-            //   <option data-doctor-id="${doc.doctor_id}" value="${doc.doctor_id}">Dr. ${doc.full_name}</option>`
-
-            //   doctorSelect.append(data);
-
-            // });
           },
           error: function(error) {
             console.log('Error fetching doctor options:', error);

@@ -24,11 +24,11 @@
 
             const read_doctor_html = `
             <tr>
-            <th scope="row">${data.doctor_id}</th>
-            <td>${data.full_name}</td>
-            <td>${datesWithNewLines}</td>
-            <td>${timesWithNewLines}</td>
-            <td>${data.contact}</td>
+            <th scope="row"><small>${data.doctor_id}</small></th>
+            <td><small>${data.full_name}</small></td>
+            <td><small>${datesWithNewLines}</small></td>
+            <td><small>${timesWithNewLines}</small></td>
+            <td><small>${data.contact}</small></td>
             <td data-doctor-id='${data.doctor_id}' data-doctor-avail-id='${data.doctor_avail_id}' data-doctor-name='${data.last_name}'>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
             <button id='callEdit' type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#mod_editDoc'>Edit</button>
