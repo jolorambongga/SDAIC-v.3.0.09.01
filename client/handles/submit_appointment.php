@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $appointment_datetime = $appointment_date . ' ' . $appointment_time;
     $date = new DateTime($appointment_datetime);
-    $formatted_date = $date->format('l, F j, Y g:i A');
+    $formatted_date = $date->format('F j, Y (l)');
+    $appointment_time_formatted = date('h:i A', strtotime($appointment_datetime));
     $current_datetime = date('F j, Y \a\t h:i A');
 
 
