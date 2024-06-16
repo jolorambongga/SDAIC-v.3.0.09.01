@@ -1,0 +1,142 @@
+.my-wrapper {
+    padding: 20px;
+}
+
+.nav-link:hover {
+    color: white;
+    background-color: grey;
+}
+
+.nav-link.active {
+    color: white;
+    background-color: grey;
+}
+
+body {
+    background-color: #FFC000;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+.wrapper {
+    width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 36px rgba(0,0,0,0.2);
+    padding: 20px;
+}
+
+.wrapper .title{
+    color: black;
+    line-height: 65px;
+    text-align: center;
+    background: #FFC000;
+    font-size: 25px;
+    font-weight: 500;
+    border-radius: 4px 4px 0 0;
+    margin: -20px -20px 20px -20px;
+    padding: 20px;
+}
+
+.wrapper .box {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.wrapper .box label {
+    display: flex;
+    height: 53px;
+    width: 100%;
+    align-items: center;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding-left: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wrapper .box input[type="radio"]:checked + label {
+    background: #FFC000;
+    border-color: #FFC000;
+}
+
+.wrapper .box input[type="radio"]:checked + label .select-dots {
+    background: #fff;
+}
+
+.wrapper .box input[type="radio"]:checked + label .select-dots::before {
+    background: #FFC000;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.wrapper .box input[type="radio"]:checked + label .text {
+    color: black;
+}
+
+.wrapper .box label .select-dots {
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.wrapper .box label .select-dots::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.wrapper .box input[type="radio"] {
+    display: none;
+}
+
+.wrapper .box label .text {
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control, .form-control-file {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+}
+
+.btn {
+    background-color: #FFC000;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e0a800;
+}

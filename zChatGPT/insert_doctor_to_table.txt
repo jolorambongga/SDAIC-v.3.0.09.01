@@ -1,0 +1,49 @@
+<?php
+
+require_once('../../../includes/config.php');
+
+try {
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Get the form data
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
+    $last_name = $_POST['last_name'];
+    $contact = $_POST['contact'];
+    $avail_date = $_POST['avail_date'];
+    $avail_start_time = $_POST['avail_start_time'];
+    $avail_end_time = $_POST['avail_end_time'];
+
+    // Insert into tbl_Doctors
+    $sql = "INSERT INTO tbl_Doctors (first_name, middle_name, last_name, contact)
+            VALUES (?, ?, ?, ?);";
+            
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([$first_name, $middle_name, $last_name, $contact]);
+
+    // Get the last inserted doctor ID
+    $doctor_id = $pdo->lastInsertId();
+
+    // Prepare data for tbl_DoctorAvailability
+    $availability_data = [
+        [$doctor_id, $avail_date, $avail_start_time, $avail_end_time]
+    ];
+
+    // Insert into tbl_DoctorAvailability
+    $sql = "INSERT INTO tbl_DoctorAvailability (doctor_id, avail_date, avail_start_time, avail_end_time)
+            VALUES (?, ?, ?, ?);";
+    $stmt = $pdo->prepare($sql);
+
+    // Insert each availability record
+    foreach ($availability_data as $availability) {
+        $stmt->execute($availability);
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode(array("status" => "success", "process" => "add doctor and availability", "data" => $availability_data));
+
+} catch (PDOException $e) {
+    echo json_encode(array("status" => "error", "message" => $e->getMessage(), "report" => "catch reached",
+                           "process" => "add doctor and availability"));
+}
