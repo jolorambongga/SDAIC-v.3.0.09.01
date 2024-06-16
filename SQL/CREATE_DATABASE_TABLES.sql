@@ -70,6 +70,7 @@
     CREATE TABLE IF NOT EXISTS tbl_Logs (
         log_id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
+        category VARCHAR(100) NOT NULL,
         action VARCHAR(100) NOT NULL,
         details TEXT,
         device VARCHAR(100),
@@ -87,6 +88,7 @@
         request_image LONGBLOB,
         notes TEXT,
         status VARCHAR(50) DEFAULT 'PENDING',
+        completed VARCHAR(50) DEFAULT 'NO',
         time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES tbl_Users(user_id),
         FOREIGN KEY (service_id) REFERENCES tbl_Services(service_id)
