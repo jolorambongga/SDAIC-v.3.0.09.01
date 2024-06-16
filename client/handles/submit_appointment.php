@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $appointment_datetime = $appointment_date . ' ' . $appointment_time;
     $date = new DateTime($appointment_datetime);
     $formatted_date = $date->format('l, F j, Y g:i A');
+    $current_datetime = date('F j, Y \a\t h:i A');
 
 
     $full_name = $_POST['full_name'];
@@ -26,9 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <head>
     <style>
     .container {
-        font-family: Arial, sans-serif;
+        font-family: 'Arial', sans-serif;
         color: #333;
         line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
     }
     .header {
         background-color: #f8f9fa;
@@ -40,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         padding: 20px;
     }
     .content p {
-        margin: 0 0 10px;
+        margin: 0 0 15px;
+        line-height: 1.8;
     }
     .highlight {
         color: #007bff;
@@ -54,6 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         font-size: 12px;
         color: #666;
     }
+    .appointment-details {
+        background-color: #f0f0f0;
+        padding: 15px;
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+    }
+    .appointment-details p {
+        margin: 5px 0;
+    }
     </style>
     </head>
     <body>
@@ -63,12 +79,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class='content'>
     <p>Good Day <span class='highlight'>$full_name</span>!</p>
-    <p>You have successfully created an appointment for <span class='highlight'>$service_name</span> on:</p>
-    <p><strong>Date:</strong> $formatted_date</p>
+    <p>You have successfully created an appointment:</p>
+    <div class='appointment-details'>
+    <p><strong>Procedure:</strong> <span class='highlight'>$service_name</span></p>
+    <p><strong>Appointment Date:</strong> $formatted_date</p>
+    <p><strong>Appointment Time:</strong> $appointment_time_formatted</p>
+    </div>
+    <p>Please wait for the next email or website notification confirming that we have approved your appointment.</p>
     <p>Thank you for choosing our services. We look forward to serving you.</p>
     </div>
     <div class='footer'>
     &copy; " . date('Y') . " Sta Maria Diagnostic Clinic. All rights reserved.
+    <p>Email sent on: $current_datetime</p>
     </div>
     </div>
     </body>
