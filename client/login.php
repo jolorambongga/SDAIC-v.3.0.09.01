@@ -40,9 +40,7 @@ checkLoggedIn();
 </div>
 </div>
 
-<?php
-  include_once('../admin/script/log_script.php');
-?>
+
 
 <script>
   $(document).ready(function() {
