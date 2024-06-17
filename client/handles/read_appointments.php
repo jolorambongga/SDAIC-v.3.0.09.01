@@ -6,10 +6,12 @@ try {
     
     $user_id = $_GET['user_id'];
     
-    $sql = "SELECT * FROM tbl_Appointments as a
-    		LEFT JOIN tbl_Services as s
-    		ON s.service_id = a.service_id
-            WHERE user_id = :user_id;";
+    $sql = "SELECT *,
+            DATE_FORMAT(a.appointment_date, '%M %d, %Y <br> (%W)') as formatted_date,
+            TIME_FORMAT(a.appointment_time, '%h:%i %p') as formatted_time
+            FROM tbl_Appointments as a
+            LEFT JOIN tbl_Services as s ON s.service_id = a.service_id
+            WHERE a.user_id = :user_id";
     
     $stmt = $pdo->prepare($sql);
     

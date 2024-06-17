@@ -152,8 +152,8 @@ checkAuth();
             <tr>
             <th scope="row"><small>${data.appointment_id}</small></th>
             <td><small>${data.service_name}</small></td>
-            <td><small>${data.appointment_date}</small></td>
-            <td><small>${data.appointment_time}</small></td>
+            <td><small>${data.formatted_date}</small></td>
+            <td><small>${data.formatted_time}</small></td>
             <td data-appointment-id='${data.appointment_id}'>
             <button id='callReqImg' type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#mod_ReqImg'>View Image</button>
             </td>

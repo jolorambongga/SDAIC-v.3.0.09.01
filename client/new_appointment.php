@@ -150,7 +150,7 @@ checkAuth();
       // Populate review box with selected values
       $('#review-box').html(`
         <p><strong>Procedure:</strong> ${service_name}</p>
-        <p><strong>Procedure ID:</strong> ${service_id}</p>
+        
         <p><strong>Image:</strong> ${request_image ? request_image.name : 'No image uploaded'}</p>
         <p><strong>Appointment Date:</strong> ${appointment_date}</p>
         <p><strong>Appointment Time:</strong> ${appointment_time}</p>

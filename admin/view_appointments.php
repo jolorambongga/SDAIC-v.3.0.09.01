@@ -84,7 +84,7 @@ include_once('header.php');
               let statusColor = '';
               switch (data.status) {
               case 'PENDING':
-                statusColor = '#ff9900';
+                statusColor = '#0000FF';
                 break;
               case 'CANCELLED':
                 statusColor = '#ff9900';
@@ -101,6 +101,7 @@ include_once('header.php');
               default:
                 statusColor = '#000000';
               }
+
               let completedColor = '';
               switch (data.completed) {
               case 'NO':
