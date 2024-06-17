@@ -249,6 +249,57 @@ include_once('header.php');
     });
   });
 
+  // APPROVE APPOINTMENT
+  $(document).on('click', '#callApprove', function() {
+    var appointment_id = $(this).closest('td').data('appointment-id');
+    var patient_name = $(this).closest('td').data('full-name');
+    var appointment_name = $(this).closest('td').data('appointment-name');
+    console.log(appointment_id, patient_name, appointment_name);
+
+    $('#approvePatientName').text(patient_name);
+    $('#approveAppointmentName').text(appointment_name);
+
+    $('#btnApprove').data('appointment-id', appointment_id);
+
+    var approveBTN = $('#btnApprove').data('appointment-id');
+    console.log("APPROVE BUTTIN ID!!!!", approveBTN);
+
+  });
+
+  $(document).on('click', '#btnApprove', function() {
+    var appointment_id = $(this).data('appointment-id');
+    var status = "APPROVED";
+    var user_input = $('#approve_user_input').val();
+
+    var data = {
+      appointment_id: appointment_id,
+      status: status,
+      user_input: user_input
+    }
+
+    console.log(appointment_id, user_input);
+
+    if (user_input !== 'APPROVE') {
+      alert('Please type APPROVE to approve.');
+      console.log(appointment_id);
+      return;
+    }
+    $.ajax({
+      type: 'POST',
+      url: 'handles/appointments/approve_reject_appointment.php',
+      data: data,
+      dataType: 'JSON',
+      success: function(response) {
+        console.log("SUCESS REJECT BTN CLICK",response);
+        loadAppointments();
+        $('#mod_Approve').modal('hide');
+      },
+      error: function(error) {
+        console.log("ERROR REJECT BTN CLICK",error);
+      }
+    });
+  });
+
   // REJECT APPOINTMENT
   $(document).on('click', '#callReject', function() {
     var appointment_id = $(this).closest('td').data('appointment-id');
@@ -286,11 +337,13 @@ include_once('header.php');
     }
     $.ajax({
       type: 'POST',
-      url: 'handles/appointments/reject_appointment.php',
+      url: 'handles/appointments/approve_reject_appointment.php',
       data: data,
       dataType: 'JSON',
       success: function(response) {
         console.log("SUCESS REJECT BTN CLICK",response);
+        loadAppointments();
+        $('#mod_Reject').modal('hide');
       },
       error: function(error) {
         console.log("ERROR REJECT BTN CLICK",error);
