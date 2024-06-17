@@ -87,11 +87,24 @@
 
 	<script>
 		$(document).ready(function () {
-			$('#btnLogout').click(function () {
+			$(document).on('click', '#btnLogout', function () {
+				var user_id = <?php echo($_SESSION['user_id']); ?>;
+				var category = "USER";
+				var action = "LOG OUT";
+				var details = "USER HAS LOOGED OUT!";
+				var data = {
+					user_id: user_id,
+					category: category,
+					action: action,
+					details: details
+				}
+				// // logAction(user_id, category, action, details);
+				console.log(data);
 				$.ajax({
 					type: "GET",
 					url: "handles/logout_endpoint.php",
 					success: function(response) {
+						logAction(user_id, category, action, details);
 						window.location.href="index.php";
 						console.log(response);
 					},
