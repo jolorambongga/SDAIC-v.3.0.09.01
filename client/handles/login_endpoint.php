@@ -12,7 +12,7 @@ try {
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
     if (empty($login) || empty($password)) {
-        echo json_encode(array("message" => "Login and password are required!", "status" => "error"));
+        echo json_encode(array("message" => "Login and password are required!", "status" => "error", "isEmpty" => "true"));
         exit;
     }
 
@@ -43,11 +43,11 @@ try {
             ));
         } else {
             // Password incorrect
-            echo json_encode(array("message" => "Wrong email/username or password!", "status" => "error"));
+            echo json_encode(array("message" => "Wrong email/username or password!", "status" => "error", "isWrong" => "true"));
         }
     } else {
         // User not found
-        echo json_encode(array("message" => "Wrong email/username or password!", "status" => "error"));
+        echo json_encode(array("message" => "Wrong email/username or password!", "status" => "error", "isNotFound" => "true"));
     }
 } catch (PDOException $e) {
     // Database error

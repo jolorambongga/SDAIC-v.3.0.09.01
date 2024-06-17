@@ -29,7 +29,7 @@ try {
         $count = $checkStmt->fetchColumn();
 
         if ($count > 0) {
-            echo json_encode(["status" => "error", "message" => "Username or email already taken", "isTaken" => "true"]);
+            echo json_encode(array("status" => "error", "message" => "Username or email already taken", "isTaken" => "true"));
             exit;
         }
 
@@ -50,7 +50,7 @@ try {
 
         if ($stmt->execute()) {
             $_SESSION['user_id'] = $pdo->lastInsertId();
-            echo json_encode(array("status" => "success", "message" => "Registration successful", "isTaken" => "false"));
+            echo json_encode(array("status" => "success", "message" => "Registration successful", "isTaken" => "false", "user_id" => $_SESSION['user_id']));
             exit;
         } else {
             echo json_encode(array("status" => "error", "message" => "Registration failed. Please try again.", "isTaken" => "false"));

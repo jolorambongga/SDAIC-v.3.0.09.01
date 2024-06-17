@@ -120,7 +120,8 @@ $(document).ready(function(){
         if (response.isTaken === "true") {
           alert("Username or email is already taken.");
         } else {
-          window.location.href = "new_appointment.php";
+          console.log(response);
+          // window.location.href = "new_appointment.php";
         }
         console.log(response);
       },
