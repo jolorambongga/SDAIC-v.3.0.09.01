@@ -63,8 +63,27 @@ checkAuth();
         </div>
       </div>
     </div>
-
     <!-- end image modal -->
+    <!-- start modal cancel appointment -->
+    <div class="modal fade" id="mod_CancelAppointment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mod_CancelAppointmentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="mod_CancelAppointmentLabel">Cancel this appointment?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <label for="cancel_user_input" class="form-label">Type <b>CANCEL</b> to cancel your <span id="cancelAppointmentName"></span>'s appointment.</label>
+              <input type="text" id="cancel_user_input" class="form-control" required>  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger">Cancel Appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal cancel appointment -->
   </div>
 </div>
 
@@ -86,34 +105,37 @@ checkAuth();
           response.data.forEach(function(data){
             let statusColor = '';
             switch (data.status) {
-              case 'PENDING':
-                statusColor = '#ff9900';
-                break;
-              case 'REJECTED':
-                statusColor = '#ff0000';
-                break;
-              case 'APPROVED':
-                statusColor = '#009933';
-                break;
-              case 'undefined':
-                statusColor = '#FFC0CB';
-                break;
-              default:
-                statusColor = '#000000';
+            case 'PENDING':
+              statusColor = '#ff9900';
+              break;
+            case 'CANCELLED':
+              statusColor = '#ff9900';
+              break;
+            case 'REJECTED':
+              statusColor = '#ff0000';
+              break;
+            case 'APPROVED':
+              statusColor = '#009933';
+              break;
+            case 'undefined':
+              statusColor = '#FFC0CB';
+              break;
+            default:
+              statusColor = '#000000';
             }
             let completedColor = '';
             switch (data.completed) {
-              case 'NO':
-                completedColor = '#ff0000';
-                break;
-              case 'YES':
-                completedColor = '#009933';
-                break;
-              case 'undefined':
-                completedColor = '#FFC0CB';
-                break;
-              default:
-                completedColor = '#000000';
+            case 'NO':
+              completedColor = '#ff0000';
+              break;
+            case 'YES':
+              completedColor = '#009933';
+              break;
+            case 'undefined':
+              completedColor = '#FFC0CB';
+              break;
+            default:
+              completedColor = '#000000';
             }
             const read_appointments_html = `
             <tr>
@@ -122,15 +144,14 @@ checkAuth();
             <td><small>${data.appointment_date}</small></td>
             <td><small>${data.appointment_time}</small></td>
             <td data-appointment-id='${data.appointment_id}'>
-              <button id='callReqImg' type='button' class='btn btn-warning btn-sm'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
+            <button id='callReqImg' type='button' class='btn btn-warning btn-sm'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
             </td>
             <td style='color: ${statusColor};'><small>${data.status}</small></td>
             <td style='color: ${completedColor};'><small>${data.completed}</small></td>
             <td>
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-                <button id='edit' type='button' class='btn btn-success btn-sm'>Edit</button>
-                <button id='delete' type='button' class='btn btn-danger btn-sm'>Delete</button>
-              </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
+            <button id='callCancel' data-bs-toggle='modal' data-bs-target='#mod_CancelAppointment' type='button' class='btn btn-danger btn-sm'>Cancel</button>
+            </div>
             </td>
             </tr>
             `
@@ -170,7 +191,13 @@ checkAuth();
           console.log(error);
         }
       });
+    }); // END GET IMAGE
+
+    // CALL CANCEL APPOINTMENT
+    $('#callCancel').click(function() {
+      // var appointment_id = 
     });
+
   });
 </script>
 

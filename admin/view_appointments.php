@@ -33,6 +33,7 @@ include_once('header.php');
                 <th scope="col">Time</th>
                 <th scope="col">Request Image</th>
                 <th scope="col">Status</th>
+                <th scope="col">Completed</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -85,15 +86,37 @@ include_once('header.php');
               case 'PENDING':
                 statusColor = '#ff9900';
                 break;
+              case 'CANCELLED':
+                statusColor = '#ff9900';
+                break;
               case 'REJECTED':
                 statusColor = '#ff0000';
                 break;
               case 'APPROVED':
                 statusColor = '#009933';
                 break;
+              case 'undefined':
+                statusColor = '#FFC0CB';
+                break;
               default:
-
+                statusColor = '#000000';
               }
+              let completedColor = '';
+              switch (data.completed) {
+              case 'NO':
+                completedColor = '#ff0000';
+                break;
+              case 'YES':
+                completedColor = '#009933';
+                break;
+              case 'undefined':
+                completedColor = '#FFC0CB';
+                break;
+              default:
+                completedColor = '#000000';
+              }
+
+              const isChecked = data.completed === 'YES' ? 'checked' : '';
               const read_appointments_html = `
               <tr>
               <th scope="row"><small>${data.appointment_id}</small></th>
@@ -102,9 +125,13 @@ include_once('header.php');
               <td><small>${data.formatted_date}</small></td>
               <td><small>${data.formatted_time}</small></td>
               <td data-appointment-id='${data.appointment_id}'>
-              <button id='callReqImg' type='button' class='btn btn-warning btn-sm'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
+              <button id='callReqImg' type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#mod_ReqImg'>View Image</button>
               </td>
               <td style='color: ${statusColor};'><small>${data.status}</small></td>
+              <td data-appointment-id='${data.appointment_id}' style='color: ${completedColor};'>
+              <small class="completed-text">${data.completed}</small>
+              <input type="checkbox" class="cbxCompleted" data-completed-yes="YES" data-completed-no="NO" ${isChecked} />
+              </td>
               <td>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
               <button id='reject' type='button' class='btn btn-danger btn-sm'>Reject</button>
@@ -120,35 +147,70 @@ include_once('header.php');
             console.log("ERROR", error);
           }
         });
-      } // END FUNCTION
+  } // END FUNCTION
 
       // GET IMAGE
-      $('#tbodyAppointments').on('click', '#callReqImg', function() {
-        var appointment_id = $(this).closest("td").data('appointment-id');
-        console.log("console click", appointment_id);
-        $.ajax({
-          type: 'GET',
-          url: 'handles/appointments/get_image.php',
-          dataType: 'JSON',
-          data: { appointment_id: appointment_id },
-          success: function(response) {
-            if (response.status === "success") {
-              $('#imgBody').html(`<img src="data:image/png;base64,${response.data.request_image}" class="img-fluid" alt="Request Image">`);
-              $('#mod_ReqImg .modal-title').text(`Request Image - ${response.data.first_name} ${response.data.last_name} (${response.data.service_name})`);
-              console.log(response);
-            } else {
-              console.log("Image not found for appointment ID: " + appointment_id);
-            }
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
-      });
+  $('#tbodyAppointments').on('click', '#callReqImg', function() {
+    var appointment_id = $(this).closest("td").data('appointment-id');
+    console.log("console click", appointment_id);
+    $.ajax({
+      type: 'GET',
+      url: 'handles/appointments/get_image.php',
+      dataType: 'JSON',
+      data: { appointment_id: appointment_id },
+      success: function(response) {
+        if (response.status === "success") {
+          $('#imgBody').html(`<img src="data:image/png;base64,${response.data.request_image}" class="img-fluid" alt="Request Image">`);
+          $('#mod_ReqImg .modal-title').text(`Request Image - ${response.data.first_name} ${response.data.last_name} (${response.data.service_name})`);
+          console.log(response);
+        } else {
+          console.log("Image not found for appointment ID: " + appointment_id);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
     });
-  </script>
+      }); // END GET IMAGE
 
-  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'></script>
+      // COMPLETED CHECK FUNCTION
+  $('#tbodyAppointments').on('change', '.cbxCompleted', function() {
+    console.log("CHANGED");
+    var checkbox = $(this);
+    var isChecked = checkbox.is(':checked');
+    var appointment_id = checkbox.closest('td').data('appointment-id');
+    var completedYes = checkbox.data('completed-yes');
+    var completedNo = checkbox.data('completed-no');
+    var completed = isChecked ? completedYes : completedNo;
+
+    $.ajax({
+      type: 'POST',
+      url: 'handles/appointments/set_completed_appointment.php',
+      data: { completed: completed, appointment_id: appointment_id },
+      dataType: 'JSON',
+      success: function(response) {
+        if (response.status === 'success') {
+          console.log("SUCCESS CHECKBOX:", response);
+          var updatedRow = response.data;
+          // Update the completed text and color
+          var completedCell = checkbox.closest('td');
+          completedCell.find('.completed-text').text(updatedRow.completed);
+          completedCell.css('color', updatedRow.completed === 'YES' ? '#009933' : '#ff0000');
+          checkbox.prop('checked', updatedRow.completed === 'YES');
+        } else {
+          console.log("ERROR CHECKBOX:", response);
+        }
+      },
+      error: function(error) {
+        console.log("ERROR CHECKBOX:", error);
+      }
+    });
+  });
+
+});
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'></script>
 </body>
 
 </html>

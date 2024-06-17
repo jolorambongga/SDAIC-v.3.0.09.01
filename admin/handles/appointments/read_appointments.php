@@ -13,7 +13,8 @@ try {
                 TIME_FORMAT(a.appointment_time, '%H:%i %p') as formatted_time,
                 a.notes,
                 a.request_image,
-                a.status
+                a.status,
+                a.completed
             FROM tbl_Appointments as a
             JOIN tbl_Services as s ON a.service_id = s.service_id
             LEFT JOIN tbl_Users as u ON a.user_id = u.user_id";

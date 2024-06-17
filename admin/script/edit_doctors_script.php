@@ -58,15 +58,15 @@
       });
 
 
-      $(document).on('click', '#callDelete', function() {
-        var doctor_id = $(this).closest("td").data('doctor-id');
-        var service_name = $(this).closest("td").data('doctor-name');
+      // $(document).on('click', '#callDelete', function() {
+      //   var doctor_id = $(this).closest("td").data('doctor-id');
+      //   var service_name = $(this).closest("td").data('doctor-name');
 
-        console.log("doctor id:", doctor_id, "doctor name:", service_name);
-        $('#servName').text(service_name);
+      //   console.log("doctor id:", doctor_id, "doctor name:", service_name);
+      //   $('#servName').text(service_name);
 
-        $('#btnDel').data('doctor-id', doctor_id);
-      });
+      //   $('#btnDel').data('doctor-id', doctor_id);
+      // });
 
       $(document).on('click', '#btnDel', function() {
         var doctor_id = $(this).data('doctor-id');
