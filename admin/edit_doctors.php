@@ -17,7 +17,7 @@ include_once('header.php');
       <!-- add button -->
       <div class="row">
         <div class="col-12">
-          <button type="button" class="btn btn-primary mt-3 mb-3 float-end" data-bs-toggle="modal"
+          <button type="button" class="btn btn-primary mt-3 mb-3 float-end btn-sm" data-bs-toggle="modal"
           data-bs-target="#mod_addDoc">Add Doctor</button>
         </div>
       </div>

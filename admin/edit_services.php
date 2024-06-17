@@ -19,7 +19,7 @@ include_once('header.php');
       <!-- start add button -->
       <div class="row">
         <div class="col-12">
-          <button type="button" class="btn btn-primary mt-3 mb-3 float-end" data-bs-toggle="modal"
+          <button type="button" class="btn btn-primary mt-3 mb-3 float-end btn-sm" data-bs-toggle="modal"
           data-bs-target="#mod_addServ">Add Service</button>
         </div>
       </div>
@@ -251,8 +251,8 @@ include_once('header.php');
               <td><small>${data.full_name}</small></td>
               <td data-service-id='${data.service_id}' data-doctor-id='${data.doctor_id}' data-service-name='${data.service_name}'>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-              <button id='callEdit' type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#mod_editServ'>Edit</button>
-              <button id='callDelete' type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#mod_delServ'>Delete</button>
+              <button id='callEdit' type='button' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#mod_editServ'>Edit</button>
+              <button id='callDelete' type='button' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#mod_delServ'>Delete</button>
               </div>
               </td>
               </tr>

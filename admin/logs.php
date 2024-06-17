@@ -16,7 +16,7 @@ include_once('header.php');
       <!-- add button -->
       <div class="row">
         <div class="col-12">
-          <button type="button" class="btn btn-primary mt-3 mb-3 float-end">IDK YET</button>
+          <button type="button" class="btn btn-primary mt-3 mb-3 float-end btn-sm">IDK YET</button>
         </div>
       </div>
       <!-- end button -->
