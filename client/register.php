@@ -35,7 +35,7 @@ checkLoggedIn();
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="contact" class="form-label">Contact</label>
-                <input type="tel" class="form-control" id="contact" name="contact" aria-describedby="contact" required>
+                <input type="text" class="form-control" id="contact" name="contact" aria-describedby="contact" maxlength="11" pattern="[0-9]*" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="birthday" class="form-label">Birthday</label>
@@ -57,7 +57,7 @@ checkLoggedIn();
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" aria-describedby="username" required>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="username" maxlength="12" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="password" class="form-label">Password</label>
@@ -73,24 +73,64 @@ checkLoggedIn();
 </div>
 
 <script>
-  $(document).ready(function(){
-    $("#frm_register").on("submit", function(event){
+$(document).ready(function(){
+  // Function to validate username on keypress
+  $("#username").on("keypress", function(event) {
+    var regex = /^[a-z]+$/;
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
       event.preventDefault();
+      return false;
+    }
+  });
 
-      $.ajax({
-        url: "handles/register_endpoint.php",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response){
-          window.location.href="new_appointment.php";
-          console.log(response);
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          console.error("Error: " + textStatus, errorThrown);
-        }
-      });
+  $("#contact").on("keypress", function(event) {
+    var keyCode = event.which ? event.which : event.keyCode;
+    if (keyCode < 48 || keyCode > 57) { // Allow only 0-9
+      event.preventDefault();
+    }
+  });
+
+  $("#username").on("input", function() {
+    $(this).val(function(_, val) {
+      return val.toLowerCase();
     });
   });
+
+  $("#contact").on("input", function() {
+    $(this).val(function(_, val) {
+      return val.replace(/\s/g, ''); // Remove spaces
+    });
+  });
+
+  $("#frm_register").on("submit", function(event){
+    event.preventDefault();
+
+    var username = $("#username").val().trim();
+    if (!/^[a-z]+$/.test(username)) {
+      alert("Username should contain only lowercase letters.");
+      return;
+    }
+
+    $.ajax({
+      url: "handles/register_endpoint.php",
+      type: "POST",
+      data: $(this).serialize(),
+      success: function(response){
+        if (response.isTaken === "true") {
+          alert("Username or email is already taken.");
+        } else {
+          window.location.href = "new_appointment.php";
+        }
+        console.log(response);
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        console.error("Error: " + textStatus, errorThrown);
+      }
+    });
+  });
+});
+
 </script>
 
 <?php
