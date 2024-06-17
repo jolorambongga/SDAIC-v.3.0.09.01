@@ -63,6 +63,47 @@ include_once('header.php');
       </div>
 
       <!-- end image modal -->
+      <!-- start approve modal -->
+      <div class="modal fade" id="mod_Approve" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mod_ApproveLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="mod_ApproveLabel">Approve this appointment?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="approve_user_input" class="form-label">Type <b>APPROVE</b> to approve <span id="approvePatientName"></span>'s <span id="approveAppointmentName"></span> appointment.</label>
+              <input type="text" id="approve_user_input" class="form-control" required="">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="btnApprove" data-appointment-id="" type="button" class="btn btn-success">Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end approve modal -->
+
+      <!-- start reject modal -->
+      <div class="modal fade" id="mod_Reject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mod_RejectLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="mod_RejectLabel">Reject this appointment?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="reject_user_input" class="form-label">Type <b>REJECT</b> to reject <span id="rejectPatientName"></span>'s <span id="rejectAppointmentName"></span> appointment.</label>
+              <input type="text" id="reject_user_input" class="form-control" required="">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="btnReject" data-appointment-id="" type="button" class="btn btn-danger">Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end reject modal -->
     </div>
   </div>
 
@@ -133,10 +174,10 @@ include_once('header.php');
               <small class="completed-text">${data.completed}</small>
               <input type="checkbox" class="cbxCompleted" data-completed-yes="YES" data-completed-no="NO" ${isChecked} />
               </td>
-              <td>
+              <td data-appointment-id='${data.appointment_id}' data-full-name="${data.first_name} ${data.last_name}" data-appointment-name="${data.service_name}">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-              <button id='reject' type='button' class='btn btn-danger btn-sm'>Reject</button>
-              <button id='approve' type='button' class='btn btn-success btn-sm'>Approve</button>
+              <button id='callReject' data-bs-toggle="modal" data-bs-target="#mod_Reject" type='button' class='btn btn-danger btn-sm'>Reject</button>
+              <button id='callApprove' data-bs-toggle="modal" data-bs-target="#mod_Approve" type='button' class='btn btn-success btn-sm'>Approve</button>
               </div>
               </td>
               </tr>
@@ -150,7 +191,7 @@ include_once('header.php');
         });
   } // END FUNCTION
 
-      // GET IMAGE
+  // GET IMAGE
   $('#tbodyAppointments').on('click', '#callReqImg', function() {
     var appointment_id = $(this).closest("td").data('appointment-id');
     console.log("console click", appointment_id);
@@ -174,7 +215,7 @@ include_once('header.php');
     });
       }); // END GET IMAGE
 
-      // COMPLETED CHECK FUNCTION
+  // COMPLETED CHECK FUNCTION
   $('#tbodyAppointments').on('change', '.cbxCompleted', function() {
     console.log("CHANGED");
     var checkbox = $(this);
@@ -207,6 +248,56 @@ include_once('header.php');
       }
     });
   });
+
+  // REJECT APPOINTMENT
+  $(document).on('click', '#callReject', function() {
+    var appointment_id = $(this).closest('td').data('appointment-id');
+    var patient_name = $(this).closest('td').data('full-name');
+    var appointment_name = $(this).closest('td').data('appointment-name');
+    console.log(appointment_id, patient_name, appointment_name);
+
+    $('#rejectPatientName').text(patient_name);
+    $('#rejectAppointmentName').text(appointment_name);
+
+    $('#btnReject').data('appointment-id', appointment_id);
+
+    var rejectBTN = $('#btnReject').data('appointment-id');
+    console.log("REJECT BUTTIN ID!!!!", rejectBTN);
+
+  });
+
+  $(document).on('click', '#btnReject', function() {
+    var appointment_id = $(this).data('appointment-id');
+    var status = "REJECTED";
+    var user_input = $('#reject_user_input').val();
+
+    var data = {
+      appointment_id: appointment_id,
+      status: status,
+      user_input: user_input
+    }
+
+    console.log(appointment_id, user_input);
+
+    if (user_input !== 'REJECT') {
+      alert('Please type REJECT to reject.');
+      console.log(appointment_id);
+      return;
+    }
+    $.ajax({
+      type: 'POST',
+      url: 'handles/appointments/reject_appointment.php',
+      data: data,
+      dataType: 'JSON',
+      success: function(response) {
+        console.log("SUCESS REJECT BTN CLICK",response);
+      },
+      error: function(error) {
+        console.log("ERROR REJECT BTN CLICK",error);
+      }
+    });
+  });
+
 
 });
 </script>
