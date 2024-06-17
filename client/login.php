@@ -53,12 +53,13 @@ include_once('header.php');
         dataType: 'JSON',
         success: function(response) {
           var user_id = response.data.user_id;
+          var category = "USER";
+          var action = "LOG IN";
+          var details = "USER ${user_id} HAS LOGGED IN";
           // console.log("USER ID:", user_id);
           if(response.status === "success") {
             // window.location.href = "new_appointment.php";
-            logAction(user_id, 'LOG', 'USER LOGGED-IN',  'HAS LOGGED IN');
-            // logAction(user_id, LOG, USER, LOGGEDIN)
-            // Test();
+            logAction(user_id, category, action, details);
           } else {
             console.error("Login failed:", response.message);
           }
