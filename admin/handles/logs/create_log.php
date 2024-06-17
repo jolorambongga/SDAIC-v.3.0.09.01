@@ -2,20 +2,18 @@
 require_once('../../../includes/config.php');
 
 try {
-    // Set PDO attributes
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Retrieve POST data
     $user_id = $_POST['user_id'];
     $category = $_POST['category'];
     $action = $_POST['action'];
     $details = $_POST['details'];
     $device = $_POST['device'];
+    $device_model = $_POST['device_model'];
     $browser = $_POST['browser'];
 
-    // Prepare SQL statement
-    $sql = "INSERT INTO tbl_Logs (user_id, category, action, details, device, browser)
-            VALUES (:user_id, :category, :action, :details, :device, :browser)";
+    $sql = "INSERT INTO tbl_Logs (user_id, category, action, details, device, device_model, browser)
+            VALUES (:user_id, :category, :action, :details, :device, :device_model, :browser)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -23,6 +21,7 @@ try {
     $stmt->bindParam(':action', $action, PDO::PARAM_STR);
     $stmt->bindParam(':details', $details, PDO::PARAM_STR);
     $stmt->bindParam(':device', $device, PDO::PARAM_STR);
+    $stmt->bindParam(':device_model', $device_model, PDO::PARAM_STR);
     $stmt->bindParam(':browser', $browser, PDO::PARAM_STR);
 
     $stmt->execute();

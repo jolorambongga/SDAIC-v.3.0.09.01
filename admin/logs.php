@@ -32,6 +32,7 @@ include_once('header.php');
                 <th scope="col">Action</th>
                 <th scope="col">Details</th>
                 <th scope="col">Device</th>
+                <th scope="col">Device Model</th>
                 <th scope="col">Browser</th>
                 <th scope="col">Timestamp</th>
               </tr>
@@ -70,6 +71,7 @@ include_once('header.php');
             <td>${tae.action}</td>
             <td>${tae.details}</td>
             <td>${tae.device}</td>
+            <td>${tae.device_model}</td>
             <td>${tae.browser}</td>
             <td>${tae.time_stamp}</td>
             </tr>

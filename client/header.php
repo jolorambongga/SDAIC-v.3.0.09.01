@@ -7,6 +7,7 @@
 	<link rel='stylesheet' href='../includes/css/my_css.css'/>
 	<link rel='stylesheet' href='../includes/css/my_radio.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bowser"></script>
 </head>
 
 <body>
@@ -56,7 +57,7 @@
 					echo`
 
 					<script>
-						window.location.href="index.php";
+					window.location.href="index.php";
 					</script>
 					`;
 				}
@@ -82,6 +83,7 @@
 	</div>
 
 	<!-- end header -->
+
 
 	<script>
 		$(document).ready(function () {

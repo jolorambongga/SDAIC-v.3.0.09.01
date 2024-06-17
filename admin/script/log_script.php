@@ -1,59 +1,70 @@
 <script>
-function logAction(user_id, category, action, details) {
-    // Get device information
-    var device = (function() {
+    function logAction(user_id, category, action, details) {
         var ua = navigator.userAgent;
-        if (/Mobile|Android|iP(ad|hone)/.test(ua)) {
-            return 'mobile';
-        }
-        if (/Tablet|iPad/.test(ua)) {
-            return 'tablet';
-        }
-        return 'desktop';
-    })();
 
-    // Get browser information
-    var browser = navigator.userAgent;
-    var browser_name = 'Unknown';
-    var browser_version = '';
+        var device = (function() {
+            if (/Android/.test(ua)) {
+                return 'android';
+            }
 
-    // Detect browser name and version
-    if (browser.indexOf("Chrome") != -1) {
-        browser_name = "Chrome";
-        browser_version = navigator.userAgent.match(/Chrome\/(\S+)/)[1];
-    } else if (browser.indexOf("Safari") != -1 && browser.indexOf("Chrome") == -1) {
-        browser_name = "Safari";
-        browser_version = navigator.userAgent.match(/Version\/(\S+)/)[1];
-    } else if (browser.indexOf("Firefox") != -1) {
-        browser_name = "Firefox";
-        browser_version = navigator.userAgent.match(/Firefox\/(\S+)/)[1];
-    } else if (browser.indexOf("MSIE") != -1 || browser.indexOf("Trident") != -1) {
-        browser_name = "Internet Explorer";
-        browser_version = navigator.userAgent.match(/(?:MSIE |rv:)(\S+)/)[1];
+            if (/iPad/.test(ua)) {
+                return 'ipad';
+            }
+
+            if (/iPhone/.test(ua)) {
+                return 'iphone';
+            }
+
+            if (/Mobile/.test(ua)) {
+                return 'mobile';
+            }
+
+            if (/Tablet/.test(ua)) {
+                return 'tablet';
+            }
+
+            return 'desktop';
+        })();
+
+        var browser_info = bowser.getParser(navigator.userAgent);
+        var browser_name = browser_info.getBrowserName();
+        var browser_version = browser_info.getBrowserVersion();
+
+        var device_model = '';
+
+        if (device === 'android') {
+            var match = ua.match(/Android\s([^\s;]+)/);
+            if (match) {
+                device_model = match[1];
+            }
+        } else if (device === 'ipad' || device === 'iphone') {
+            var match = ua.match(/(iPad|iPhone);.*CPU.*OS (\d+)/);
+            if (match) {
+                device_model = match[1] + ' ' + match[2];
+            }
+        }
+
+        var time_stamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        $.ajax({
+            type: 'POST',
+            url: '../admin/handles/logs/create_log.php',
+            data: {
+                user_id: user_id,
+                category: category,
+                action: action,
+                details: details,
+                device: device,
+                device_model: device_model,
+                browser: browser_name + ' ' + browser_version,
+                time_stamp: time_stamp
+            },
+            success: function(response) {
+                console.log('Log action success:', response);
+            },
+            error: function(error) {
+                console.error('Log action error:', error);
+            }
+        });
     }
-
-    // Get the current timestamp
-    var time_stamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
-    // Make AJAX request to create_log.php
-    $.ajax({
-        type: 'POST',
-        url: '../admin/handles/logs/create_log.php',
-        data: {
-            user_id: user_id,
-            category: category,
-            action: action,
-            details: details,
-            device: device,
-            browser: browser_name + ' ' + browser_version,  // Concatenate browser name and version
-            time_stamp: time_stamp
-        },
-        success: function(response) {
-            console.log('Log action success:', response);
-        },
-        error: function(error) {
-            console.error('Log action error:', error);
-        }
-    });
-}
 </script>
