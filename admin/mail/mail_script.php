@@ -7,11 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 
-require('../../PHPMailer/src/Exception.php');
-require('../../PHPMailer/src/PHPMailer.php');
-require('../../PHPMailer/src/SMTP.php');
-
-require('mail_config.php');
+require_once('mail_config.php');
 
 
 function sendMail($email, $subject, $message) {

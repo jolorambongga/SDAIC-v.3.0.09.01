@@ -2,6 +2,9 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once('../../includes/config.php');
     require_once('../../admin/mail/mail_script.php');
+    require_once('../../PHPMailer/src/Exception.php');
+    require_once('../../PHPMailer/src/PHPMailer.php');
+    require_once('../../PHPMailer/src/SMTP.php');
 
     $user_id = $_POST['user_id'];
     $service_id = $_POST['service_id'];
@@ -12,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $appointment_datetime = $appointment_date . ' ' . $appointment_time;
     $date = new DateTime($appointment_datetime);
+
+
     $formatted_date = $date->format('F j, Y (l)');
     $appointment_time_formatted = date('h:i A', strtotime($appointment_datetime));
     $current_datetime = date('F j, Y \a\t h:i A');
@@ -86,6 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><strong>Appointment Date:</strong> $formatted_date</p>
     <p><strong>Appointment Time:</strong> $appointment_time_formatted</p>
     </div>
+    <hr>
+    <br>
     <p>Please wait for the next email or website notification confirming that we have approved your appointment.</p>
     <p>Thank you for choosing our services. We look forward to serving you.</p>
     </div>

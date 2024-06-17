@@ -290,12 +290,16 @@ include_once('header.php');
       data: data,
       dataType: 'JSON',
       success: function(response) {
-        console.log("SUCESS REJECT BTN CLICK",response);
+        console.log("SUCESS APPROVE BTN CLICK",response);
         loadAppointments();
         $('#mod_Approve').modal('hide');
+        console.log(response.data.full_name);
+        console.log(response.data.service_name);
+        console.log(response.data.appointment_date);
+        console.log(response.data.appointment_time);
       },
       error: function(error) {
-        console.log("ERROR REJECT BTN CLICK",error);
+        console.log("ERROR APPROVE BTN CLICK",error);
       }
     });
   });
@@ -344,6 +348,10 @@ include_once('header.php');
         console.log("SUCESS REJECT BTN CLICK",response);
         loadAppointments();
         $('#mod_Reject').modal('hide');
+        console.log(response.data.full_name);
+        console.log(response.data.service_name);
+        console.log(response.data.appointment_date);
+        console.log(response.data.appointment_time);
       },
       error: function(error) {
         console.log("ERROR REJECT BTN CLICK",error);
