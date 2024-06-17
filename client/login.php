@@ -55,7 +55,7 @@ include_once('header.php');
           var user_id = response.data.user_id;
           var category = "USER";
           var action = "LOG IN";
-          var details = "USER ${user_id} HAS LOGGED IN";
+          var details = "USER HAS LOGGED IN";
           // console.log("USER ID:", user_id);
           if(response.status === "success") {
             // window.location.href = "new_appointment.php";

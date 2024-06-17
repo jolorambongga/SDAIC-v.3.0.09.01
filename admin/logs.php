@@ -59,36 +59,23 @@ include_once('header.php');
         dataType: 'json',
         success: function(response) {
           console.log("SUCCESS READ LOGS: ", response);
-          if(response.status === 'success') {
-            var logs = response.data;
-            var tbody = $('#tbodyLogs');
-            tbody.empty(); // Clear any existing rows
-
-            if(logs.length === 0) {
-              var row = '<tr><td colspan="8" class="text-center">No logs available</td></tr>';
-              tbody.append(row);
-            } else {
-              logs.forEach(function(log, index) {
-                const read_logs_html = `
-                <tr>
-                <th scope="row">${log.log_id}</th>
-                <th>${log.first_name} ${log.last_name}</th>
-                <th>${log.category}</th>
-                <th>${log.action}</th>
-                <th>${log.details}</th>
-                <th>${log.device}</th>
-                <th>${log.browser}</th>
-                <th>${log.time_stamp}</th>
-                </tr>
-                `
-                tbody.append(row);
-              });
-            }
-          } else {
-            console.error("Error in response:", response.message);
-            var row = '<tr><td colspan="8" class="text-center">Error fetching logs</td></tr>';
-            $('#tbodyLogs').append(row);
-          }
+          var tbody = $('#tbodyLogs');
+          tbody.empty();
+          response.data.forEach(function(tae) {
+            const read_logs_html = `
+            <tr>
+            <th scope="row">${tae.log_id}</th>
+            <td>${tae.first_name} ${tae.last_name}</td>
+            <td>${tae.category}</td>
+            <td>${tae.action}</td>
+            <td>${tae.details}</td>
+            <td>${tae.device}</td>
+            <td>${tae.browser}</td>
+            <td>${tae.time_stamp}</td>
+            </tr>
+            `;
+            tbody.append(read_logs_html);
+          });
         },
         error: function(error) {
           console.log("ERROR READ LOGS:", error);
