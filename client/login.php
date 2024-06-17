@@ -6,6 +6,8 @@ $active_your_appointments = "";
 $active_new_appointment = "";
 $active_login="active";
 include_once('header.php');
+include_once('handles/auth.php');
+checkLoggedIn();
 ?>
 
 <link rel="stylesheet" href="../includes/css/my_login.css">
@@ -57,9 +59,9 @@ include_once('header.php');
           var action = "LOG IN";
           var details = "USER HAS LOGGED IN";
           // console.log("USER ID:", user_id);
-          if(response.status === "success") {
-            // window.location.href = "new_appointment.php";
+          if(response.status === "success") {            
             logAction(user_id, category, action, details);
+            window.location.href = "new_appointment.php";
           } else {
             console.error("Login failed:", response.message);
           }

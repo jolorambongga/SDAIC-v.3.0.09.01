@@ -5,6 +5,8 @@ $active_profile = "";
 $active_your_appointments = "";
 $active_new_appointment = "";
 include_once('header.php');
+include_once('handles/auth.php');
+checkLoggedIn();
 ?>	
 
 <link rel="stylesheet" href="../includes/css/my_register.css">
