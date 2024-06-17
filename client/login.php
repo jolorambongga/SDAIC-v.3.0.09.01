@@ -38,6 +38,10 @@ include_once('header.php');
 </div>
 </div>
 
+<?php
+  include_once('../admin/script/log_script.php');
+?>
+
 <script>
   $(document).ready(function() {
     $('#frm_login').submit(function (e) {
@@ -46,9 +50,18 @@ include_once('header.php');
         type: 'POST',
         url: 'handles/login_endpoint.php',
         data: {login: $('#login').val(), password: $('#password').val()},
+        dataType: 'JSON',
         success: function(response) {
-          console.log(response);
-          window.location.href="new_appointment.php";
+          var user_id = response.data.user_id;
+          // console.log("USER ID:", user_id);
+          if(response.status === "success") {
+            // window.location.href = "new_appointment.php";
+            logAction(user_id, 'LOG', 'USER LOGGED-IN',  'HAS LOGGED IN');
+            // logAction(user_id, LOG, USER, LOGGEDIN)
+            // Test();
+          } else {
+            console.error("Login failed:", response.message);
+          }
         },
         error: function(error) {
           console.log(error);
