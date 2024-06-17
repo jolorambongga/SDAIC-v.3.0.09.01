@@ -71,11 +71,13 @@ try {
 
 	if($status === 'APPROVED') {
 		$status_message = $approved;
+		$color = "green";
 	} else if ($status === 'REJECTED') {
 		$status_message = $rejected;
+		$color = "red";
 	}
 
-	$status_title = "Has been <span style='color: $color;'>$status</span>";
+	$status_title = "<b>Has been <span style='color: $color;'>$status</span></b>";
 
 	$message = "
 	<html>
@@ -142,12 +144,12 @@ try {
 	</div>
 	<hr>
 	<br>
-	<p><bold><center>$status_title</center></bold></p>
+	<p><bold><center>$status_title!</center></bold></p>
 	<p><center>$status_message</center></p>
 	</div>
 	<div class='footer'>
 	<p>&copy; " . date('Y') . " Sta Maria Diagnostic Clinic. All rights reserved.</p>
-	<p>Email sent on: $current_datetime</p>
+	<p><i>Email sent on: $current_datetime</i></p>
 	</div>
 	</div>
 	</body>

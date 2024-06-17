@@ -93,12 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <hr>
     <br>
-    <p>Please wait for the next email or website notification confirming that we have approved your appointment.</p>
-    <p>Thank you for choosing our services. We look forward to serving you.</p>
+    <p><b><center>Thank you for choosing our services. We look forward to serving you.</center></b></p>
+    <p><center><i>Please wait for the next email or website notification for the status update regarding your appointment.</i></center></p>
     </div>
     <div class='footer'>
     &copy; " . date('Y') . " Sta Maria Diagnostic Clinic. All rights reserved.
-    <p>Email sent on: $current_datetime</p>
+    <p><i>Email sent on: $current_datetime</i></p>
     </div>
     </div>
     </body>
