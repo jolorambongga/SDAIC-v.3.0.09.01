@@ -1,5 +1,5 @@
 <?php
-$title = "LOGIN ITO";
+$title = "SDAIC - Log In";
 $active_index = "";
 $active_profile = "";
 $active_your_appointments = "";

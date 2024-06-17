@@ -1,5 +1,5 @@
 <?php
-$title = 'Edit Services';
+$title = 'Admin - Edit Services';
 $active_services = 'active';
 include_once('header.php');
 ?>

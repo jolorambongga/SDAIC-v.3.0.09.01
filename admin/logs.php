@@ -1,5 +1,5 @@
 <?php
-$title = 'Edit Services';
+$title = 'Audit Logs';
 $active_logs = 'active';
 include_once('header.php');
 ?>

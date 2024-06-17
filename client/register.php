@@ -1,5 +1,5 @@
 <?php
-$title = "REGISTER ITO";
+$title = "SDAIC - Registration";
 $active_index = "";
 $active_profile = "";
 $active_your_appointments = "";

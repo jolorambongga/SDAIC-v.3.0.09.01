@@ -1,5 +1,5 @@
 <?php
-$title = 'Edit Services';
+$title = 'Admin - Dashboard';
 $active_dashboard = 'active';
 include_once('header.php');
 ?>

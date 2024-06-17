@@ -1,5 +1,5 @@
 <?php
-$title = "INDEX ITO";
+$title = "SDAIC - Homepage";
 $active_index = "active";
 $active_profile = "";
 $active_your_appointments = "";

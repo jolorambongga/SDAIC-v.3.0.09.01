@@ -1,5 +1,5 @@
 <?php
-$title = 'Edit Services';
+$title = 'Admin - View Appointments';
 $active_appointments = 'active';
 include_once('header.php');
 ?>
