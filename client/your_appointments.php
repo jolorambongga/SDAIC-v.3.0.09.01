@@ -74,11 +74,11 @@ checkAuth();
           </div>
           <div class="modal-body">
             <label for="cancel_user_input" class="form-label">Type <b>CANCEL</b> to cancel your <span id="cancelAppointmentName"></span>'s appointment.</label>
-              <input type="text" id="cancel_user_input" class="form-control" required>  
+            <input type="text" id="cancel_user_input" class="form-control" required>  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">Cancel Appointment</button>
+            <button id="btnCancel" data-appointment-id="" type="button" class="btn btn-danger">Cancel Appointment</button>
           </div>
         </div>
       </div>
@@ -94,6 +94,7 @@ checkAuth();
     function loadAppointments() {
       var user_id = "<?php echo($_SESSION['user_id']);?>";
       console.log("USER ID: (your appointments load)::", user_id);
+      
       $.ajax({
         type: 'GET',
         url: 'handles/read_appointments.php',
@@ -102,11 +103,12 @@ checkAuth();
         success: function(response) {
           console.log(response);
           $('#tbodyAppointments').empty();
-          response.data.forEach(function(data){
+
+          response.data.forEach(function(data) {
             let statusColor = '';
             switch (data.status) {
             case 'PENDING':
-              statusColor = '#ff9900';
+              statusColor = '#0000FF';
               break;
             case 'CANCELLED':
               statusColor = '#ff9900';
@@ -123,6 +125,7 @@ checkAuth();
             default:
               statusColor = '#000000';
             }
+
             let completedColor = '';
             switch (data.completed) {
             case 'NO':
@@ -137,6 +140,14 @@ checkAuth();
             default:
               completedColor = '#000000';
             }
+
+                    // Check if status is CANCELLED to conditionally hide the cancel button
+            const cancelButtonHtml = data.status === 'CANCELLED' ?
+            '' :
+            `<div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
+            <button id="callCancel" data-bs-toggle="modal" data-bs-target="#mod_CancelAppointment" type="button" class="btn btn-danger btn-sm">Cancel</button>
+            </div>`;
+
             const read_appointments_html = `
             <tr>
             <th scope="row"><small>${data.appointment_id}</small></th>
@@ -144,17 +155,16 @@ checkAuth();
             <td><small>${data.appointment_date}</small></td>
             <td><small>${data.appointment_time}</small></td>
             <td data-appointment-id='${data.appointment_id}'>
-            <button id='callReqImg' type='button' class='btn btn-warning btn-sm'data-bs-toggle='modal' data-bs-target='#mod_ReqImg '>View Image</button>
+            <button id='callReqImg' type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#mod_ReqImg'>View Image</button>
             </td>
             <td style='color: ${statusColor};'><small>${data.status}</small></td>
             <td style='color: ${completedColor};'><small>${data.completed}</small></td>
-            <td>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-            <button id='callCancel' data-bs-toggle='modal' data-bs-target='#mod_CancelAppointment' type='button' class='btn btn-danger btn-sm'>Cancel</button>
-            </div>
+            <td data-appointment-id='${data.appointment_id}'>
+            ${cancelButtonHtml}
             </td>
             </tr>
-            `
+            `;
+
             $('#tbodyAppointments').append(read_appointments_html);
           });
         },
@@ -162,7 +172,7 @@ checkAuth();
           console.log(error);
         }
       });
-    }
+    } // END FUNCTION
 
     // GO TO NEW APPOINTMENT
     $('#btnAddNewAppointment').click(function() {
@@ -194,8 +204,40 @@ checkAuth();
     }); // END GET IMAGE
 
     // CALL CANCEL APPOINTMENT
-    $('#callCancel').click(function() {
-      // var appointment_id = 
+    $(document).on('click', '#callCancel', function() {
+      var appointment_id = $(this).closest('td').data('appointment-id');
+      console.log("APPOINTMENT ID CALL CANCEL BTN:", appointment_id);
+
+      $('#btnCancel').data('appointment-id', appointment_id);
+
+      var idCancel = $('#btnCancel').data('appointment-id');
+      console.log(idCancel);
+    });
+
+    $(document).on('click', '#btnCancel', function() {
+      var appointment_id = $(this).data('appointment-id');
+      var user_input = $('#cancel_user_input').val();
+
+      if (user_input !== 'CANCEL') {
+        alert('Please type CANCEL to confirm.');
+        console.log(appointment_id);
+        return;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: 'handles/cancel_appointment.php',
+        data: {appointment_id: appointment_id, user_input: user_input},
+        dataType: 'JSON',
+        success: function(response) {
+          console.log("CANCEL APPOINTMENT RESPONSE:", response);
+          loadAppointments();
+          $('#mod_CancelAppointment').modal('hide');
+        },
+        error: function(error) {
+          console.log("CANCEL APPOINTMENT ERROR:", error);
+        }
+      });
     });
 
   });
