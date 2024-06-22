@@ -119,11 +119,13 @@ $(document).ready(function(){
       success: function(response){
         if (response.isTaken === "true") {
           alert("Username or email is already taken.");
-        } else {
+        } else if (response.status === "success") {
           console.log(response);
           window.location.href = "new_appointment.php";
+        } else {
+          console.log(response);
+          // window.location.href="index.php";
         }
-        console.log(response);
       },
       error: function(error){
         console.log("Error: ", error);
