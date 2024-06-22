@@ -88,7 +88,7 @@
 	<script>
 		$(document).ready(function () {
 			$(document).on('click', '#btnLogout', function () {
-				var user_id = <?php echo($_SESSION['user_id']); ?>;
+				var user_id = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
 				var category = "USER";
 				var action = "LOG OUT";
 				var details = "USER HAS LOOGED OUT!";

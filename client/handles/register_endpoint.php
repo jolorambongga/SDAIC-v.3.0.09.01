@@ -50,6 +50,11 @@ try {
 
         if ($stmt->execute()) {
             $_SESSION['user_id'] = $pdo->lastInsertId();
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['contact'] = $user['contact'];
+            $_SESSION['first_name'] = $user['first_name'];
+            $_SESSION['middle_name'] = $user['middle_name'];
+            $_SESSION['last_name'] = $user['last_name'];
             echo json_encode(array("status" => "success", "message" => "Registration successful", "isTaken" => "false", "user_id" => $_SESSION['user_id']));
             exit;
         } else {

@@ -70,6 +70,7 @@ checkAuth();
 
 <script>
   $(document).ready(function () {
+    console.log('document ready');
     console.log(<?php echo json_encode('USER ID: ' . $_SESSION['user_id']); ?>);
     // Load procedures on page load
     loadProcedures();
@@ -78,7 +79,7 @@ checkAuth();
       $.ajax({
         type: 'GET',
         url: 'handles/read_services.php',
-        dataType: 'json',
+        dataType: 'JSON',
         success: function(response) {
           $('#box').empty();
           $.each(response.data, function(key, value){
@@ -97,7 +98,7 @@ checkAuth();
           console.log("ERROR SA LOAD PROCEDURES:", error);
         }
       });
-    }
+    } // END LOAD PROCEDURES
 
     // Navigation functions
     $('.next-btn').click(function(){

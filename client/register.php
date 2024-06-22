@@ -121,12 +121,12 @@ $(document).ready(function(){
           alert("Username or email is already taken.");
         } else {
           console.log(response);
-          // window.location.href = "new_appointment.php";
+          window.location.href = "new_appointment.php";
         }
         console.log(response);
       },
-      error: function(jqXHR, textStatus, errorThrown){
-        console.error("Error: " + textStatus, errorThrown);
+      error: function(error){
+        console.log("Error: ", error);
       }
     });
   });
