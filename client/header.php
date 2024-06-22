@@ -8,6 +8,7 @@
 	<link rel='stylesheet' href='../includes/css/my_radio.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bowser"></script>
+	<script src="../admin/script/log_script.js"></script>
 </head>
 
 <body>
@@ -88,28 +89,28 @@
 	<script>
 		$(document).ready(function () {
 			$(document).on('click', '#btnLogout', function () {
-				var user_id = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
-				var category = "USER";
-				var action = "LOG OUT";
-				var details = "USER HAS LOOGED OUT!";
-				var data = {
-					user_id: user_id,
-					category: category,
-					action: action,
-					details: details
-				}
-				// // logAction(user_id, category, action, details);
-				console.log(data);
+
 				$.ajax({
 					type: "GET",
 					url: "handles/logout_endpoint.php",
+					dataType: 'JSON',
 					success: function(response) {
-						logAction(user_id, category, action, details);
-						window.location.href="index.php";
-						console.log(response);
+						console.log("LOGOUT RESPONSE",response);
+						// var res = JSON.parse(response);
+						if(response.status === "success") {
+							var user_id = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
+							var category = "USER";
+							var action = "LOG OUT";
+							var details = "USER HAS LOOGED OUT!";            
+							logAction(user_id, category, action, details);
+							window.location.href = "new_appointment.php";
+						} else {
+							console.error("Logout failed failed:", response.message);
+						}
 					},
 					error: function(error) {
-						console.log(error);
+						console.log("LOGOUT ERROR", error);
+						alert("ERROR TRYING TO LOGOUT!");
 					}
 				});
 			});

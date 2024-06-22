@@ -27,6 +27,7 @@ include_once('header.php');
             <thead>
               <tr>
                 <th scope="col">#</th>
+                <th scope="col">Username</th>
                 <th scope="col">Patient Name</th>
                 <th scope="col">Contact Number</th>
                 <th scope="col">Email Address</th>
@@ -64,6 +65,7 @@ include_once('header.php');
                     const read_users_html = `
                         <tr>
                             <th scope="row">${data.user_id}</th>
+                            <td><small>${data.username}</small></th>
                             <td><small>${data.first_name} ${data.middle_name} ${data.last_name}</small></td>
                             <td><small>${data.contact}</small></td>
                             <td><small>${data.email}</small></td>

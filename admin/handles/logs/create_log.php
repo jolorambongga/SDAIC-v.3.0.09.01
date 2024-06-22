@@ -26,11 +26,13 @@ try {
 
     $stmt->execute();
 
-    $sql = "SELECT * FROM tbl_Logs WHERE user_id = :user_id;";
+    $log_id = $pdo->lastInsertId();
+
+    $sql = "SELECT * FROM tbl_Logs WHERE log_id = :log_id;";
 
     $stmt = $pdo->prepare($sql);
 
-    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindParam(':log_id', $log_id, PDO::PARAM_INT);
 
     $stmt->execute();
 

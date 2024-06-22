@@ -67,3 +67,4 @@ function logAction(user_id, category, action, details) {
         }
     });
 }
+

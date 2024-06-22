@@ -20,10 +20,6 @@
 </div>
 </footer>
 
-<?php
-include_once('footer_script.php');
-?>
-
 <script>
 	$(document).ready(function () {
 		$('#btnRegister').click(function () {
@@ -34,6 +30,10 @@ include_once('footer_script.php');
 		});
 	});
 </script>
+
+<?php
+include_once('footer_script.php');
+?>
 
 </body>
 
