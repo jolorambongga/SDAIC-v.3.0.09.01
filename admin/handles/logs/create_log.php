@@ -1,49 +1,60 @@
 <?php
 require_once('../../../includes/config.php');
 
-try {
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Extract POST data
+    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
+    $category = isset($_POST['category']) ? $_POST['category'] : null;
+    $action = isset($_POST['action']) ? $_POST['action'] : null;
+    $affected_data = isset($_POST['affected_data']) ? $_POST['affected_data'] : null;
+    $latitude = isset($_POST['latitude']) ? $_POST['latitude'] : null;
+    $longitude = isset($_POST['longitude']) ? $_POST['longitude'] : null;
+    $location = isset($_POST['location']) ? $_POST['location'] : null;
+    $device = isset($_POST['device']) ? $_POST['device'] : null;
+    $browser = isset($_POST['browser']) ? $_POST['browser'] : null;
+    $ip_address = isset($_POST['ip_address']) ? $_POST['ip_address'] : null;
+    $time_stamp = isset($_POST['time_stamp']) ? $_POST['time_stamp'] : date('Y-m-d H:i:s');
 
-    $user_id = $_POST['user_id'];
-    $category = $_POST['category'];
-    $action = $_POST['action'];
-    $details = $_POST['details'];
-    $device = $_POST['device'];
-    $device_model = $_POST['device_model'];
-    $browser = $_POST['browser'];
+    try {
+        // Establish database connection
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "INSERT INTO tbl_Logs (user_id, category, action, details, device, device_model, browser)
-            VALUES (:user_id, :category, :action, :details, :device, :device_model, :browser)";
+        // Prepare SQL statement
+        $sql = "INSERT INTO tbl_Logs (user_id, category, action, affected_data, latitude, longitude, location, device, browser, ip_address, time_stamp)
+                VALUES (:user_id, :category, :action, :affected_data, :latitude, :longitude, :location, :device, :browser, :ip_address, :time_stamp)";
+        
+        $stmt = $pdo->prepare($sql);
+        
+        // Bind parameters
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+        $stmt->bindParam(':action', $action, PDO::PARAM_STR);
+        $stmt->bindParam(':affected_data', $affected_data, PDO::PARAM_STR);
+        $stmt->bindParam(':latitude', $latitude);
+        $stmt->bindParam(':longitude', $longitude);
+        $stmt->bindParam(':location', $location, PDO::PARAM_STR);
+        $stmt->bindParam(':device', $device, PDO::PARAM_STR);
+        $stmt->bindParam(':browser', $browser, PDO::PARAM_STR);
+        $stmt->bindParam(':ip_address', $ip_address, PDO::PARAM_STR);
+        $stmt->bindParam(':time_stamp', $time_stamp, PDO::PARAM_STR);
+        
+        // Execute SQL statement
+        $stmt->execute();
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-    $stmt->bindParam(':category', $category, PDO::PARAM_STR);
-    $stmt->bindParam(':action', $action, PDO::PARAM_STR);
-    $stmt->bindParam(':details', $details, PDO::PARAM_STR);
-    $stmt->bindParam(':device', $device, PDO::PARAM_STR);
-    $stmt->bindParam(':device_model', $device_model, PDO::PARAM_STR);
-    $stmt->bindParam(':browser', $browser, PDO::PARAM_STR);
+        $log_id = $pdo->lastInsertId();
 
-    $stmt->execute();
+        // Fetch the inserted log entry
+        $sql = "SELECT * FROM tbl_Logs WHERE log_id = :log_id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':log_id', $log_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $log_id = $pdo->lastInsertId();
-
-    $sql = "SELECT * FROM tbl_Logs WHERE log_id = :log_id;";
-
-    $stmt = $pdo->prepare($sql);
-
-    $stmt->bindParam(':log_id', $log_id, PDO::PARAM_INT);
-
-    $stmt->execute();
-
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Return success response
-    header('Content-Type: application/json');
-    echo json_encode(array("status" => "success", "process" => "create log", "data" => $data));
-
-} catch (PDOException $e) {
-    // Return error response
-    echo json_encode(array("status" => "error", "message" => $e->getMessage(), "process" => "create log", "report" => "catch reached"));
+        echo json_encode(array('status' => 'success', 'data' => $data));
+    } catch (PDOException $e) {
+        echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
+    }
+} else {
+    echo json_encode(array('status' => 'error', 'message' => 'Method not allowed'));
 }
 ?>

@@ -72,10 +72,14 @@ CREATE TABLE IF NOT EXISTS tbl_Logs (
     user_id INT NOT NULL,
     category VARCHAR(100) NOT NULL,
     action VARCHAR(100) NOT NULL,
-    details TEXT NOT NULL,
+    affected_data TEXT NOT NULL, 
     device VARCHAR(100) NOT NULL,
     device_model VARCHAR(255) NOT NULL,
     browser VARCHAR(100) NOT NULL,
+    latitude DECIMAL(10, 6) DEFAULT NULL,
+    longitude DECIMAL(10, 6) DEFAULT NULL,
+    location VARCHAR(255) DEFAULT NULL,
+    ip_address VARCHAR(45) DEFAULT NULL,
     time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES tbl_Users(user_id) ON DELETE CASCADE
 );

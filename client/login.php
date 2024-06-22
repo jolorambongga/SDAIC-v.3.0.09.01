@@ -55,11 +55,11 @@ checkLoggedIn();
           var user_id = response.data.user_id;
           var category = "USER";
           var action = "LOG IN";
-          var details = "USER HAS LOGGED IN";
+          var affected_data = "NONE";
           // console.log("USER ID:", user_id);
           if(response.status === "success") {            
-            logAction(user_id, category, action, details);
-            window.location.href = "new_appointment.php";
+            logAction(user_id, category, action, affected_data);
+            // window.location.href = "new_appointment.php";
           } else {
             console.error("Login failed:", response.message);
           }

@@ -101,9 +101,9 @@
 							var user_id = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
 							var category = "USER";
 							var action = "LOG OUT";
-							var details = "USER HAS LOOGED OUT!";            
-							logAction(user_id, category, action, details);
-							window.location.href = "new_appointment.php";
+							var affected_data = "NONE";            
+							logAction(user_id, category, action, affected_data);
+							// window.location.href = "new_appointment.php";
 						} else {
 							console.error("Logout failed failed:", response.message);
 						}
