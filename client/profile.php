@@ -87,12 +87,12 @@ checkAuth();
 
           const read_profile_html = `
           <hr>
-          <h3>Username: ${data.username}</h3>
-          <h3>Email: ${data.email}</h3>
-          <h3>Full Name: ${data.first_name} ${data.middle_name} ${data.last_name}</h3>
-          <h3>Contact: ${data.contact}</h3>
-          <h3>Address: ${data.address}</h3>
-          <h3>Birthday: ${data.birthday}</h3>
+          <h5>Username: ${data.username}</h5>
+          <h5>Email: ${data.email}</h5>
+          <h5>Full Name: ${data.first_name} ${data.middle_name} ${data.last_name}</h5>
+          <h5>Contact: ${data.contact}</h5>
+          <h5>Address: ${data.address}</h5>
+          <h5>Birthday: ${data.birthday}</h5>
           `         
 
           $('#profileBody').append(read_profile_html);
