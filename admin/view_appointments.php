@@ -10,7 +10,7 @@ include_once('header.php');
     <div class="container-fluid">
       <div class="row">
         <div class="col-4">
-          <h1>View Appintments</h1>
+          <h1>View Appointments</h1>
         </div>
       </div>
       <!-- add button -->

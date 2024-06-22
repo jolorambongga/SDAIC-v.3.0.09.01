@@ -19,7 +19,7 @@ checkAuth();
     <!-- add button -->
     <div class="row">
       <div class="col-12">
-        <button id="btnAddNewAppointment" type="button" class="btn btn-primary mt-3 mb-3 float-end">ADD NEW APPOINTMENT</button>
+        <button id="btnAddNewAppointment" type="button" class="btn btn-primary btn-sm mt-3 mb-3 float-end">ADD NEW APPOINTMENT</button>
       </div>
     </div>
     <!-- end button -->
@@ -141,8 +141,8 @@ checkAuth();
               completedColor = '#000000';
             }
 
-                    // Check if status is CANCELLED to conditionally hide the cancel button
-            const cancelButtonHtml = data.status === 'CANCELLED' ?
+            // Check if status is CANCELLED to conditionally hide the cancel button
+            const cancelButtonHtml = (data.status === 'CANCELLED' || data.status === 'REJECTED') ?
             '' :
             `<div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
             <button id="callCancel" data-bs-toggle="modal" data-bs-target="#mod_CancelAppointment" type="button" class="btn btn-danger btn-sm">Cancel</button>
