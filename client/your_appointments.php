@@ -26,7 +26,7 @@ checkAuth();
     <!-- table -->
     <div class="row">
       <div class="col-md-12">
-        <table class="table table-striped text-end">
+        <table class="table table-striped table-success text-end">
           <thead>
             <tr>
               <th scope="col">#</th>

@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css'/>
 	<link rel='stylesheet' href='../includes/css/my_css.css'/>
-	<link rel='stylesheet' href='../includes/css/my_radio.css'/>
+	<!-- <link rel='stylesheet' href='../includes/css/my_radio.css'/> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bowser"></script>
 	<script src="../admin/script/log_script.js"></script>
@@ -13,9 +13,9 @@
 
 <body>
 	<!-- nav bar -->
-	<nav class="navbar navbar-expand-lg sticky-md-top shadow-sm" style="background-color: #FFC000;">
+	<nav class="navbar navbar-expand-lg sticky-md-top shadow-sm" style="background-color: #FFD95A;">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php" style="color: black;">
+			<a class="navbar-brand" href="index.php" style="color: #4C3D3D;">
 				<img src="https://www.logolynx.com/images/logolynx/2a/2ad00c896e94f1f42c33c5a71090ad5e.png" alt="Logo"
 				width="30" height="auto" class="d-inline-block align-text-top">
 				STA. MARIA DIAGNOSTIC AND IMAGING CENTER
@@ -27,7 +27,7 @@
 	<!-- header -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-6 d-flex align-items-end" style="background-color: whitesmoke;">
+			<div class="col-md-6 d-flex align-items-end" style="background-color: #C07F00;">
 				<ul class="nav nav-tabs my_nav">
 					<li class="nav-item">
 						<a class="nav-link <?php echo $active_index ?>" href="index.php">Homepage</a>
@@ -65,7 +65,7 @@
 
 				?>
 			</div>
-			<div class="col-md-6 d-flex justify-content-end" style="background-color: hotpink;">
+			<div class="col-md-6 d-flex justify-content-end" style="background-color: #C07F00;">
 				<!-- IF SET CONDITION FOR BUTTONS -->
 				<?php
 				if(isset($_SESSION['user_id'])) {

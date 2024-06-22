@@ -1,5 +1,5 @@
 body {
-    background-color: lightblue;
+    background-color: #FFF7D4;
 }
 
 .my-wrapper {
@@ -7,17 +7,17 @@ body {
 }
 
 .nav-link:hover {
-	color: white;
-	background-color: grey;
+	color: #4C3D3D;
+	background-color: #FFD95A;
 }
 
 .nav-link {
-
+    color: #fff;
 }
 
 .nav-link.active {
     color: white;
-    background-color: grey;
+    background-color: pink;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');

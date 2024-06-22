@@ -12,7 +12,7 @@
 
 <body>
 	<!-- nav bar -->
-	<nav class="navbar navbar-expand-lg sticky-md-top shadow-sm" style="background-color: #FFC000;">
+	<nav class="navbar navbar-expand-lg sticky-md-top shadow-sm" style="background-color: #FFD95A;">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="index.php" style="color: black;">
 				<img src="https://www.logolynx.com/images/logolynx/2a/2ad00c896e94f1f42c33c5a71090ad5e.png" alt="Logo"
@@ -26,7 +26,7 @@
 	<!-- header -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-6 d-flex align-items-end" style="background-color: whitesmoke;">
+			<div class="col-md-6 d-flex align-items-end" style="background-color: #C07F00;">
 
 				<!-- dash, profile, appointments, doctors, services, users, logs -->
 
@@ -81,7 +81,7 @@
 
 
 			</div>
-			<div class="col-md-6 d-flex justify-content-end" style="background-color: red;">
+			<div class="col-md-6 d-flex justify-content-end" style="background-color: #C07F00;">
 				<!-- IF SET CONDITION FOR BUTTONS -->
 				<button type="button" class="btn btn-primary me-2 mt-2 mb-2">Log-Out</button>
 			</div>

@@ -65,11 +65,15 @@ checkAuth();
       </div>
     </div>
     <!-- end multi-step form -->
+    <div id="load_spinner" class="d-flex justify-content-center" style="display: none;">
+      
+    </div>
   </div>
 </div>
 
 <script>
   $(document).ready(function () {
+    $('#load_spinner').empty();
     console.log('document ready');
     console.log(<?php echo json_encode('USER ID: ' . $_SESSION['user_id']); ?>);
     // Load procedures on page load
@@ -155,7 +159,7 @@ checkAuth();
         <p><strong>Image:</strong> ${request_image ? request_image.name : 'No image uploaded'}</p>
         <p><strong>Appointment Date:</strong> ${appointment_date}</p>
         <p><strong>Appointment Time:</strong> ${appointment_time}</p>
-      `);
+        `);
     }
 
     // Function to format date as "Day, Month Day, Year"
@@ -210,10 +214,16 @@ checkAuth();
         dataType: 'json',
         contentType: false,
         processData: false,
+        beforeSend: function() {
+          $('#loadSpin').append(`<div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>`);
+        },
         success: function(response) {
           console.log(response);
           console.log(formData)
           console.log(<?php echo($_SESSION['user_id']); ?>);
+          $('#loadSpin').hide();
           alert('Appointment submitted successfully!');
           // window.location.href="your_appointments.php";
         },
