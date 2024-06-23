@@ -58,11 +58,10 @@
 						var affected_data = "NONE";
 						logAction(user_id, category, action, affected_data);
 						window.location.href='index.php';
-						location.reload();
 					} else {
 						console.error("Logout failed:", response.message);
 					}
-					
+
 				},
 				error: function(error) {
 					console.log("LOGOUT ERROR", error);

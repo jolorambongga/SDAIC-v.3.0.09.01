@@ -25,6 +25,11 @@ include_once('header.php');
         <div class="col-md-12">
           <table class="table table-striped text-end">
             <thead>
+              <span class="filters">
+                <ul class="nav nav-tabs" id="my_nav">
+
+                </ul>
+              </span>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Patient</th>
@@ -110,6 +115,7 @@ include_once('header.php');
   <script>
     $(document).ready(function() {
       loadAppointments();
+      loadFilters();
       // READ APPOINTMENTS
       function loadAppointments() {
         $.ajax({
@@ -121,7 +127,7 @@ include_once('header.php');
 
             $('#tbodyAppointments').empty();
 
-            response.data.forEach(function(data) {
+             response.data.forEach(function(data) {
               let statusColor = '';
               switch (data.status) {
               case 'PENDING':
@@ -184,12 +190,42 @@ include_once('header.php');
               `;
               $('#tbodyAppointments').append(read_appointments_html);
             });
-          },
-          error: function(error) {
+           },
+           error: function(error) {
             console.log("ERROR", error);
           }
         });
   } // END FUNCTION
+
+      function loadFilters() {
+        $.ajax({
+          type: 'GET',
+          url: 'handles/services/read_services.php',
+          datType: 'JSON',
+          success: function(response) {
+            console.log("SUCCESS IN FILTER FUNCTION", response);
+            $('#my_nav').empty(); // Clear existing tabs
+
+            // Add 'All' tab as default
+            $('#my_nav').append('<li class="nav-item"><a class="nav-link active" data-service="All" href="#">All</a></li>');
+
+            // Add tabs for each service retrieved
+            response.data.forEach(function(service) {
+              $('#my_nav').append(`<li class="nav-item"><a class="nav-link" data-service="${service.service_name}" href="#">${service.service_name}</a></li>`);
+            });
+
+            // Attach click handler to dynamically created tabs
+            $('#my_nav a').on('click', function(event) {
+              event.preventDefault();
+              $(this).tab('show');
+              loadFilteredAppointments($(this).data('service')); // Load filtered appointments
+            });
+          },
+          error: function(error) {
+            console.log("ERROR IN LOAD FILTRS FUNCTION", error);
+          }
+        });
+      }
 
   // GET IMAGE
   $('#tbodyAppointments').on('click', '#callReqImg', function() {
