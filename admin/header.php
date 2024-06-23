@@ -8,6 +8,8 @@
 	<link rel='stylesheet' href='../includes/css/my_radio.css'/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 	
 </head>
 

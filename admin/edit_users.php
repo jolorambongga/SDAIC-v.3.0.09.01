@@ -75,8 +75,8 @@ include_once('header.php');
                             <td><small>${data.formatted_user_created}</small></td>
                             <td>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-                                    <button id='edit_${data.user_id}' type='button' class='btn btn-success btn-sm'>Edit</button>
-                                    <button id='delete_${data.user_id}' type='button' class='btn btn-danger btn-sm'>Delete</button>
+                                    <button id='edit_${data.user_id}' type='button' class='btn btn-success btn-sm'><i class="fas fa-edit"></i></button>
+                                    <button id='delete_${data.user_id}' type='button' class='btn btn-danger btn-sm'><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>

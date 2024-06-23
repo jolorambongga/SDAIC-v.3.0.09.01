@@ -251,8 +251,8 @@ include_once('header.php');
               <td><small>${data.full_name}</small></td>
               <td data-service-id='${data.service_id}' data-doctor-id='${data.doctor_id}' data-service-name='${data.service_name}'>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
-              <button id='callEdit' type='button' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#mod_editServ'>Edit</button>
-              <button id='callDelete' type='button' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#mod_delServ'>Delete</button>
+              <button id='callEdit' type='button' class='btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#mod_editServ'><i class="fas fa-edit"></i></button>
+              <button id='callDelete' type='button' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#mod_delServ'><i class="fas fa-trash"></i></button>
               </div>
               </td>
               </tr>
