@@ -69,7 +69,7 @@
 
 	<!-- Main content -->
 	<div id="main">
-		<div class="container-fluid">
+		<div class="container-fluid ms-0 me-0">
 			<div class="row">
 				<div class="col-12 d-flex justify-content-between align-items-center" style="background-color: #FFD95A;">
 					<span class="hamburger" onclick="openNav()">&#9776;</span>
@@ -82,16 +82,14 @@
 						if(isset($_SESSION['user_id'])) {
 							echo '<button id="btnLogout" type="button" class="btn btn-danger me-2 mt-2 mb-2">Log-Out</button>';
 						} else {
-							echo '<button id="btnRegister" type="button" class="btn btn-primary me-2 mt-2 mb-2">Register</button>';
-							echo '<button id="btnLogin" type="button" class="btn btn-primary me-2 mt-2 mb-2">Log-In</button>';
+							echo '<button id="btnRegister" type="button" class="btn btn-mydark me-2 mt-2 mb-2">Register</button>';
+							echo '<button id="btnLogin" type="button" class="btn btn-mydark me-2 mt-2 mb-2">Log-In</button>';
 						}
 						?>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
 
 		<!-- end header -->
-
-

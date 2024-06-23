@@ -13,31 +13,32 @@ checkLoggedIn();
 <link rel="stylesheet" href="../includes/css/my_login.css">
 
 <div class="my-wrapper">
-<div class="login-wrapper">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <div class="login-box">
-          <h1 class="text-center mb-4">Log In</h1>
-          <form method="post" id="frm_login">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="login" name="login" required>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="mb-4"></div>
-            <div class="form-group">
-              <input value="Log In" id="btnLogin" type="submit" class="btn btn-primary btn-block">
-            </div>
-          </form>
+  <div class="login-wrapper">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="login-box">
+            <h1 class="text-center mb-4">Log In</h1>
+            <form method="post" id="frm_login">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="login" name="login" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="mb-5">
+                <div class="form-group">
+                  <input value="Log In" id="btnLogin" type="submit" class="btn btn-mydark float-end btn-block">
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 

@@ -64,7 +64,7 @@ checkLoggedIn();
                 <input type="password" class="form-control" id="password" name="password" aria-describedby="password" required>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-mydark float-end">Submit</button>
           </form>
         </div>
       </div>
@@ -73,66 +73,66 @@ checkLoggedIn();
 </div>
 
 <script>
-$(document).ready(function(){
+  $(document).ready(function(){
   // Function to validate username on keypress
-  $("#username").on("keypress", function(event) {
-    var regex = /^[a-z]+$/;
-    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-    if (!regex.test(key)) {
-      event.preventDefault();
-      return false;
-    }
-  });
+    $("#username").on("keypress", function(event) {
+      var regex = /^[a-z]+$/;
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+    });
 
-  $("#contact").on("keypress", function(event) {
-    var keyCode = event.which ? event.which : event.keyCode;
+    $("#contact").on("keypress", function(event) {
+      var keyCode = event.which ? event.which : event.keyCode;
     if (keyCode < 48 || keyCode > 57) { // Allow only 0-9
       event.preventDefault();
     }
   });
 
-  $("#username").on("input", function() {
-    $(this).val(function(_, val) {
-      return val.toLowerCase();
+    $("#username").on("input", function() {
+      $(this).val(function(_, val) {
+        return val.toLowerCase();
+      });
     });
-  });
 
-  $("#contact").on("input", function() {
-    $(this).val(function(_, val) {
+    $("#contact").on("input", function() {
+      $(this).val(function(_, val) {
       return val.replace(/\s/g, ''); // Remove spaces
     });
-  });
+    });
 
-  $("#frm_register").on("submit", function(event){
-    event.preventDefault();
+    $("#frm_register").on("submit", function(event){
+      event.preventDefault();
 
-    var username = $("#username").val().trim();
-    if (!/^[a-z]+$/.test(username)) {
-      alert("Username should contain only lowercase letters.");
-      return;
-    }
-
-    $.ajax({
-      url: "handles/register_endpoint.php",
-      type: "POST",
-      data: $(this).serialize(),
-      success: function(response){
-        if (response.isTaken === "true") {
-          alert("Username or email is already taken.");
-        } else if (response.status === "success") {
-          console.log(response);
-          window.location.href = "new_appointment.php";
-        } else {
-          console.log(response);
-          // window.location.href="index.php";
-        }
-      },
-      error: function(error){
-        console.log("Error: ", error);
+      var username = $("#username").val().trim();
+      if (!/^[a-z]+$/.test(username)) {
+        alert("Username should contain only lowercase letters.");
+        return;
       }
+
+      $.ajax({
+        url: "handles/register_endpoint.php",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response){
+          if (response.isTaken === "true") {
+            alert("Username or email is already taken.");
+          } else if (response.status === "success") {
+            console.log(response);
+            window.location.href = "new_appointment.php";
+          } else {
+            console.log(response);
+          // window.location.href="index.php";
+          }
+        },
+        error: function(error){
+          console.log("Error: ", error);
+        }
+      });
     });
   });
-});
 
 </script>
 
