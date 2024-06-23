@@ -60,7 +60,7 @@ checkLoggedIn();
           // console.log("USER ID:", user_id);
           if(response.status === "success") {            
             logAction(user_id, category, action, affected_data);
-            // window.location.href = "new_appointment.php";
+            window.location.href = "new_appointment.php";
           } else {
             console.error("Login failed:", response.message);
           }

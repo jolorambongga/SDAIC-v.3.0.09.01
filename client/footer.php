@@ -51,14 +51,18 @@
 				success: function(response) {
 					console.log("LOGOUT RESPONSE", response);
 					if(response.status === "success") {
+						console.log(response);
 						var user_id = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
 						var category = "USER";
 						var action = "LOG OUT";
 						var affected_data = "NONE";
 						logAction(user_id, category, action, affected_data);
+						window.location.href='index.php';
+						location.reload();
 					} else {
 						console.error("Logout failed:", response.message);
 					}
+					
 				},
 				error: function(error) {
 					console.log("LOGOUT ERROR", error);

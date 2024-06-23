@@ -80,7 +80,7 @@
 					<div>
 						<?php
 						if(isset($_SESSION['user_id'])) {
-							echo '<button id="btnLogout" type="button" class="btn btn-danger me-2 mt-2 mb-2">Log-Out</button>';
+							echo '<button id="btnLogout" type="button" class="btn btn-mydark me-2 mt-2 mb-2">Log-Out</button>';
 						} else {
 							echo '<button id="btnRegister" type="button" class="btn btn-mydark me-2 mt-2 mb-2">Register</button>';
 							echo '<button id="btnLogin" type="button" class="btn btn-mydark me-2 mt-2 mb-2">Log-In</button>';
